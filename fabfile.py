@@ -4,14 +4,14 @@ import fabric
 from fabric.api import env, execute, task, local, sudo, run
 from fabric.api import get, put, execute, require
 from fabric.colors import red, green, blue, yellow
-from fabric.context_managers import cd, prefix, show, hide
+from fabric.context_managers import cd, prefix, show, hide, shell_env
 from fabric.contrib.files import exists, sed, upload_template
 from fabric.utils import puts
 
 
 # HOSTS
 env.hosts = [
-    '35.188.234.160', # IP address of the demo server
+    '35.186.182.85', # IP address of the demo server
 ]
 env.user = 'ivan'
 
@@ -52,6 +52,7 @@ def install_base():
     """
     Updates base system and installs prerequisite system pacakges.
     """
+    puts('Installing and updating base system (might take a few minutes).')
     with hide('running', 'stdout', 'stderr'):
         sudo('apt-get update -qq')
         sudo('apt-get upgrade -y')
@@ -118,19 +119,21 @@ def setup_kolibri():
                     '/etc/supervisor/conf.d/kolibri.conf',
                     context=context, use_jinja=True, use_sudo=True, backup=False)
     sudo('service supervisor restart')
+    puts(green('Kolibri start script and supervisor setup done.'))
 
 
 @task
-def import_channels(channel_id):
+def import_channels():
     """
-
+    Import the channels in `CHANNELS_TO_IMPORT` using the command line interface.
     """
     base_cmd = 'python ' + os.path.join(KOLIBRI_HOME, KOLIBRI_PEX_FILE) + ' manage'
-    with shell_env(KOLIBRI_HOME=KOLIBRI_HOME):
-        for channel_id in CHANNELS_TO_IMPORT:
-            run(base_cmd + ' importchannel -- network ' + channel_id)
-            run(base_cmd + ' importcontent -- network ' + channel_id)
-
+    with hide('stdout'):
+        with shell_env(KOLIBRI_HOME=KOLIBRI_HOME):
+            for channel_id in CHANNELS_TO_IMPORT:
+                run(base_cmd + ' importchannel -- network ' + channel_id)
+                run(base_cmd + ' importcontent -- network ' + channel_id)
+    puts(green('Channels ' + str(CHANNELS_TO_IMPORT) + ' imported.'))
 
 @task
 def restart_kolibri():
