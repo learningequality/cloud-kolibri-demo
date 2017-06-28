@@ -9,4 +9,4 @@ export KOLIBRI_PORT={{KOLIBRI_PORT}}
 export KOLIBRI_PEX_FILE={{KOLIBRI_PEX_FILE}}
 
 python $KOLIBRI_PEX_FILE language setdefault $KOLIBRI_LANG
-exec python $KOLIBRI_PEX_FILE start --port=$KOLIBRI_PORT   # TODO: test exec vs no-exec
+exec python $KOLIBRI_PEX_FILE start --foreground --port=$KOLIBRI_PORT   # TODO: test exec vs no-exec
