@@ -9,24 +9,46 @@ from fabric.contrib.files import exists, sed, upload_template
 from fabric.utils import puts
 
 
-# HOSTS
-env.hosts = [
-    '35.186.182.85', # IP address of the demo server
-]
+# ROLEDEFS
+env.roledefs = {
+    'unicef-demo': {
+        'hosts': ['35.186.182.85'],
+        'channels_to_import': ['7d28f53a13e04b309c26268491395f3e'],
+        'hostname': 'unicefdemo.learningequality.org',
+    },
+    'mit-blossoms-demo': {
+        'hosts':['35.197.13.137'],
+        'channels_to_import': ['913efe9f14c65cb1b23402f21f056e99'],
+        'hostname': 'mit-blossoms-demo.learningequality.org', # Does not exist
+    },
+    'touchable-earth-demo': {
+        'hosts':['35.186.190.71'],
+        'channels_to_import': ['66cef05505fa550b970e69c3623e82ba'],
+        'hostname': 'te-demo.learningequality.org', # Does not exist
+    },
+    'serlo-demo': {
+        'hosts':['35.188.227.233'],
+        'channels_to_import': ['c089800ef73e5ef0ac1d0d9e1d193147'],
+        'hostname': 'serlo-demo.learningequality.org', # Does not exist
+    }
+}
+
 env.user = 'ivan'
 
 # GLOBAL SETTTINGS
 CONFIG_DIR = './config'
 
 # INSTANCE SETTTINGS
-KOLIBRI_PEX_URL = 'https://github.com/learningequality/kolibri/releases/download/v0.4.0-beta10/kolibri-v0.4.0-beta10.pex'
-CHANNELS_TO_IMPORT = ['7d28f53a13e04b309c26268491395f3e',]
-DEMO_SERVER_HOSTNAME = 'unicef.kolibridemo.learningequality.org'
+KOLIBRI_PEX_URL = 'https://github.com/learningequality/kolibri/releases/download/v0.4.3/kolibri-v0.4.3.pex'
 KOLIBRI_LANG = 'en' # or 'sw-tz'
 KOLIBRI_HOME = '/kolibrihome'
 KOLIBRI_PORT = 9090
 KOLIBRI_PEX_FILE = os.path.basename(KOLIBRI_PEX_URL)
 
+
+@task
+def info():
+    run('ps -aux')
 
 @task
 def provision():
@@ -81,11 +103,14 @@ def configure_nginx():
     """
     Perform necessary NGINX configurations to forward HTTP traffic to kolibri.
     """
+    current_role = env.effective_roles[0]
+    demo_server_hostname = env.roledefs[current_role]['hostname']
+
     if exists('/etc/nginx/sites-enabled/default'):
         sudo('rm /etc/nginx/sites-enabled/default')
     context = {
         'INSTANCE_PUBLIC_IP': env.host,
-        'DEMO_SERVER_HOSTNAME': DEMO_SERVER_HOSTNAME,
+        'DEMO_SERVER_HOSTNAME': demo_server_hostname,
         'KOLIBRI_HOME': KOLIBRI_HOME,
         'KOLIBRI_PORT': KOLIBRI_PORT,
     }
@@ -125,15 +150,17 @@ def setup_kolibri():
 @task
 def import_channels():
     """
-    Import the channels in `CHANNELS_TO_IMPORT` using the command line interface.
+    Import the channels in `channels_to_import` using the command line interface.
     """
+    current_role = env.effective_roles[0]
+    channels_to_import = env.roledefs[current_role]['channels_to_import']
     base_cmd = 'python ' + os.path.join(KOLIBRI_HOME, KOLIBRI_PEX_FILE) + ' manage'
     with hide('stdout'):
         with shell_env(KOLIBRI_HOME=KOLIBRI_HOME):
-            for channel_id in CHANNELS_TO_IMPORT:
+            for channel_id in channels_to_import:
                 run(base_cmd + ' importchannel -- network ' + channel_id)
                 run(base_cmd + ' importcontent -- network ' + channel_id)
-    puts(green('Channels ' + str(CHANNELS_TO_IMPORT) + ' imported.'))
+    puts(green('Channels ' + str(channels_to_import) + ' imported.'))
 
 @task
 def restart_kolibri():
