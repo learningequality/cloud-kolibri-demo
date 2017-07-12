@@ -12,42 +12,36 @@ Install
     pip install -r requirements.txt
 
 
-
 Create instance
 ---------------
-
-### Using command line
+Suppose you want to setup a demo server called `mitblossoms-demo`. First you must
+create the demo server:
 
     gcloud init
     fab create:mitblossoms-demo
 
-### Using web interface
-
-See [docs/gcp_instance.md](docs/gcp_instance.md).
-
+Note it's also possible to provision a virtual machine using web interface.
+See [docs/gcp_instance.md](docs/gcp_instance.md) for more info.
 
 
 Using
 -----
 
-  1. Provision a virtual machine (see [docs/gcp_instance.md](docs/gcp_instance.md).
-
-  2. Update the `env.roledefs` info in `fabfile.py` inserting appropriate info:
-      - A short name for this role, e.g., `serlo-demo`
-      - The IP address of the new cloud host
-      - The channel id to load into Kolibri
+  1. Update the `env.roledefs` info in `fabfile.py` inserting appropriate info:
+      - A short name for this role, e.g., `mitblossoms-demo`
+      - The IP address of the new cloud host (obtained when created)
+      - The channel id to load into Kolibri (obtained from content curation server)
       - A hostname that nginx will listen to (optional)
 
-  3. To provision the demo server, run the command:
+  2. To provision the demo server, run the command:
 
-         fab demoserver  -R serlo-demo
+         fab demoserver  -R mitblossoms-demo
 
-  4. Go the IP address or hostname and complete the Kolibri setup wizard
+  3. Go the IP address or hostname and complete the Kolibri setup wizard
 
 
-
-Decommission
-------------
+Delete instance
+---------------
 
     fab delete:mitblossoms-demo
 

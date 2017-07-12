@@ -1,5 +1,6 @@
 import json
 import os
+import time
 
 import fabric
 from fabric.api import env, execute, task, local, sudo, run
@@ -12,58 +13,91 @@ from fabric.utils import puts
 
 # ROLEDEFS
 env.roledefs = {
-    'unicef-demo': {
+    'old-unicef-demo': {    # UPDATED, KEEPING THIS ONE AROUND UNTIL DNS CHANGES
         'hosts': ['35.186.182.85'],
-        'channels_to_import': ['7d28f53a13e04b309c26268491395f3e'],
+        'channels_to_import': ['7db80873586841e4a1c249b2bb8ba62d'], # used to be 7d28f53a13e04b309c26268491395f3e
         'hostname': 'unicefdemo.learningequality.org',
     },
     'mit-blossoms-demo': {
-        'hosts':['35.197.13.137'],
+        'hosts':['35.197.13.137'],                                              # TO DELETE
         'channels_to_import': ['913efe9f14c65cb1b23402f21f056e99'],
         'hostname': 'mit-blossoms-demo.learningequality.org', # Does not exist
     },
-    'touchable-earth-demo': {
+    'old-touchable-earth-demo': {                                               # TO DELETE
         'hosts':['35.186.190.71'],
         'channels_to_import': ['66cef05505fa550b970e69c3623e82ba'],
         'hostname': 'te-demo.learningequality.org', # Does not exist
     },
-    'serlo-demo': {
-        'hosts':['35.188.227.233'],
+    'old-serlo-demo': {
+        'hosts':['35.188.227.233'],                                             # TO DELETE
         'channels_to_import': ['c089800ef73e5ef0ac1d0d9e1d193147'],
         'hostname': 'serlo-demo.learningequality.org', # Does not exist
     },
     #
-    # NEW
+    #
+    #
+    # NEW GCP ACCOUNT
     'mitblossoms-demo': {
-        'hosts':['??'],
-        'channels_to_import': ['???'],
-        'hostname': '???.learningequality.org',
-    }
+        'hosts':['104.196.162.204'],
+        'channels_to_import': ['913efe9f14c65cb1b23402f21f056e99'],
+        'hostname': 'mitblossoms-demo.learningequality.org',    # TODO: create DNS record
+    },
+    'unicef-demo': {
+        'hosts':['104.196.196.6'],
+        'channels_to_import': ['7db80873586841e4a1c249b2bb8ba62d'],
+        'hostname': 'unicefdemo.learningequality.org',          # TODO: update to new IP
+    },
+    'serlo-demo': {
+        'hosts':['104.196.182.229'],
+        'channels_to_import': ['c089800ef73e5ef0ac1d0d9e1d193147'],
+        'hostname': 'serlo-demo.learningequality.org',          # TODO: create DNS record
+    },
+    'te-demo': {
+        'hosts':['35.190.168.15'],
+        'channels_to_import': ['66cef05505fa550b970e69c3623e82ba'],
+        'hostname': 'te-demo.learningequality.org',             # TODO: create DNS record
+    },
+    'sikana-demo': {
+        'hosts':['35.185.81.12'],
+        'channels_to_import': [
+            '3e9ffc29aa0b59c3bda8d8c7ed179685', # ZH
+            '6583e111dac85239bb533f26fae6860d', # ZH-TW
+            '757fe48770be588797d731b683fcc243', # RU
+            '8ef625db6e86506c9a3bac891e413fff', # FR
+            'cfa63fd45abf5b7390b1a41f3b4971bb', # TR
+            'fe95a8142b7952e0a0856944a2295951', # PL
+            '2871a3680d665bd1a8923660c8c0e1c7', # PT
+            'c367b7d7cf625b9aa525972cad27c602', # PT-BR
+            '30c71c99c42c57d181e8aeafd2e15e5f', # ES
+            '3e464ee12f6a50a781cddf59147b48b1', # EN
+        ],
+        'hostname': 'sikana-demo.learningequality.org',         # TODO: create DNS record
+    },
 }
+
 
 # GLOBAL SETTTINGS
 env.user = 'ivan'
 CONFIG_DIR = './config'
 
-# INSTANCE SETTTINGS
-KOLIBRI_PEX_URL = 'https://files.slack.com/files-pri/T0KT5DC58-F664K783T/download/kolibri-v0.4.0-beta11-294-gd1737c50.pex?pub_secret=dbdfe634c7'
+# KOLIBRI SETTTINGS
+KOLIBRI_PEX_URL = 'https://github.com/learningequality/kolibri/releases/download/v0.5.0-beta2/kolibri-v0.5.0-beta2.pex'
 KOLIBRI_LANG = 'en' # or 'sw-tz'
 KOLIBRI_HOME = '/kolibrihome'
 KOLIBRI_PORT = 9090
-KOLIBRI_PEX_FILE = os.path.basename(KOLIBRI_PEX_URL.split("?")[0]) # in case ?querystr...
+KOLIBRI_PEX_FILE = os.path.basename(KOLIBRI_PEX_URL.split("?")[0])  # in case ?querystr...
 
-
-# GCP settings
+# GCP SETTINGS
 GCP_ZONE = 'us-east1-d'
 GCP_REGION = 'us-east1'
-
-@task
-def info():
-    run('ps -aux')
+GCP_BOOT_DISK_SIZE = '30GB'
 
 
 @task
 def create(instance_name):
+    """
+    Creeate a GCP instance and associate a static IP address for it.
+    """
     # puts(green('You may need to run `gcloud init` before running this command.'))
     # STEP 1: provision a static IP address
     reserve_ip_cmd =  'gcloud compute addresses create ' + instance_name
@@ -74,20 +108,28 @@ def create(instance_name):
     create_cmd =  'gcloud compute instances create ' + instance_name
     create_cmd += ' --zone ' + GCP_ZONE
     create_cmd += ' --machine-type f1-micro'
-    create_cmd += ' --boot-disk-size 30GB'
-    create_cmd += ' --image debian-8-jessie-v20170619'
+    create_cmd += ' --boot-disk-size ' + GCP_BOOT_DISK_SIZE
+    create_cmd += ' --image-project debian-cloud --image debian-8-jessie-v20170619'
     create_cmd += ' --address ' + instance_name
+    create_cmd += ' --tags http-server,https-server'
     create_cmd += ' --format json'
     cmd_out = local(create_cmd, capture=True)
     cmd_result = json.loads(cmd_out)
     new_ip = cmd_result[0]['networkInterfaces'][0]['accessConfigs'][0]['natIP']
     puts(green('Created demo instance ' + instance_name + ' with IP ' + new_ip))
-    puts(green('Please update the dictionary `env.roledefs` in `fabfile.py`:'))
-    # TODO: print exact dict template that user needed to add...
+    puts(green('Add this paragraph to the dict `env.roledefs` in `fabfile.py`:'))
+    puts(blue("    '%s': {"                                     % instance_name ))
+    puts(blue("        'hosts':['%s'],"                         % new_ip        ))
+    puts(blue("        'channels_to_import': ['<channel_id>'],"                 ))
+    puts(blue("        'hostname': '%s.learningequality.org',"  % instance_name ))
+    puts(blue("    },"                                                          ))
 
 
 @task
 def delete(instance_name):
+    """
+    Delete the GCP instance and it's associated IP address.
+    """
     delete_cmd = 'gcloud compute instances delete ' + instance_name + ' --quiet'
     local(delete_cmd)
     delete_ip_cmd = 'gcloud compute addresses delete ' + instance_name + ' --quiet'
@@ -98,11 +140,16 @@ def delete(instance_name):
 
 @task
 def demoserver():
+    """
+    Main setup command that does all the steps.
+    """
     install_base()
     download_kolibri()
     configure_nginx()
     setup_kolibri()
+    restart_kolibri(post_restart_sleep=30)  # wait for DB migration to happen...
     import_channels()
+    restart_kolibri()
     puts(green('Kolibri demo server setup complete.'))
 
 
@@ -201,9 +248,15 @@ def import_channels():
 
 
 @task
-def restart_kolibri():
+def info():
+    run('ps -aux')
+
+
+@task
+def restart_kolibri(post_restart_sleep=0):
     sudo('service nginx restart')
     sudo('service supervisor restart')
+    time.sleep(post_restart_sleep)
 
 
 @task
@@ -211,3 +264,10 @@ def stop_kolibri():
     sudo('service nginx stop')
     sudo('service supervisor stop')
 
+
+@task
+def delete_kolibri():
+    stop_kolibri()
+    sudo('rm -rf ' + KOLIBRI_HOME)
+    sudo('rm /etc/nginx/sites-available/kolibri.conf /etc/nginx/sites-enabled/kolibri.conf')
+    sudo('rm /etc/supervisor/conf.d/kolibri.conf')
