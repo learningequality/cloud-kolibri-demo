@@ -58,7 +58,7 @@ env.roledefs = {
         'hostname': 'te-demo.learningequality.org',             # TODO: create DNS record
     },
     'sikana-demo': {
-        'hosts':['35.185.81.12'],
+        'hosts':['104.196.110.174'],
         'channels_to_import': [
             '3e9ffc29aa0b59c3bda8d8c7ed179685', # ZH
             '6583e111dac85239bb533f26fae6860d', # ZH-TW
