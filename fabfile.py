@@ -51,14 +51,16 @@ env.roledefs = {
     },
 }
 
+# fb51dae6df7545af8455aa3a0c32048d
+
 
 # GLOBAL SETTTINGS
 env.user = 'ivan'
 CONFIG_DIR = './config'
 
 # KOLIBRI SETTTINGS
-KOLIBRI_PEX_URL = 'https://github.com/learningequality/kolibri/releases/download/v0.5.0-beta2/kolibri-v0.5.0-beta2.pex'
-KOLIBRI_LANG = 'en' # or 'sw-tz'
+KOLIBRI_PEX_URL = 'https://github.com/learningequality/kolibri/releases/download/v0.5.0-beta3/kolibri-v0.5.0-beta3.pex'
+KOLIBRI_LANG_DEFAULT = 'en' # or 'sw-tz'
 KOLIBRI_HOME = '/kolibrihome'
 KOLIBRI_PORT = 9090
 KOLIBRI_PEX_FILE = os.path.basename(KOLIBRI_PEX_URL.split("?")[0])  # in case ?querystr...
@@ -183,10 +185,15 @@ def configure_nginx():
 
 
 @task
-def setup_kolibri():
+def setup_kolibri(kolibri_lang=KOLIBRI_LANG_DEFAULT):
+    """
+    Setup kolibri startup script and supervisor config.
+    Args:
+      - `kolibri_lang` in ['en','sw-tz','es-es','es-mx','fr-fr','pt-pt','hi-in']
+    """
     # startup script
     context = {
-        'KOLIBRI_LANG': KOLIBRI_LANG,
+        'KOLIBRI_LANG': kolibri_lang,
         'KOLIBRI_HOME': KOLIBRI_HOME,
         'KOLIBRI_PORT': KOLIBRI_PORT,
         'KOLIBRI_PEX_FILE': KOLIBRI_PEX_FILE,
@@ -247,3 +254,18 @@ def delete_kolibri():
     sudo('rm -rf ' + KOLIBRI_HOME)
     sudo('rm /etc/nginx/sites-available/kolibri.conf /etc/nginx/sites-enabled/kolibri.conf')
     sudo('rm /etc/supervisor/conf.d/kolibri.conf')
+
+
+@task
+def update_kolibri(kolibri_lang=None):
+    """
+    Use this task to re-install kolibri:
+      - (re)download the Kolibri pex from KOLIBRI_PEX_URL
+      - overwrite the startup script /kolibrihome/startkolibri.sh
+      - overwrite the supervisor script /etc/supervisor/conf.d/kolibri.conf.
+    """
+    stop_kolibri()
+    download_kolibri()
+    setup_kolibri(kolibri_lang=kolibri_lang)
+    restart_kolibri()
+

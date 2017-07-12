@@ -40,9 +40,28 @@ Using
   3. Go the IP address or hostname and complete the Kolibri setup wizard
 
 
+
+Updating
+--------
+To update the `mitblossoms-demo` server that currently runs an old version of Kolibri,
+change `KOLIBRI_PEX_URL` in `fabfile.py` to the URL of the latest release and then run:
+
+    fab -R mitblossoms-demo   update_kolibri
+
+This will download the new pex, overwrite the startup script, and restart Kolibri.
+
+You can also change the language of the Kolibri installation by passing the optional
+argument `kolibri_lang`. For example, to switch the `mitblossoms-demo` server to
+use French for the Kolibri user interface, run the command:
+
+    fab -R mitblossoms-demo   update_kolibri:kolibri_lang=fr-fr
+
+The people of Québec will love you and buy you a [poutine](https://en.wikipedia.org/wiki/Poutine).
+
+
+
 Delete instance
 ---------------
 
     fab delete:mitblossoms-demo
-
 
