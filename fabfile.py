@@ -13,49 +13,25 @@ from fabric.utils import puts
 
 # ROLEDEFS
 env.roledefs = {
-    'old-unicef-demo': {    # UPDATED, KEEPING THIS ONE AROUND UNTIL DNS CHANGES
-        'hosts': ['35.186.182.85'],
-        'channels_to_import': ['7db80873586841e4a1c249b2bb8ba62d'], # used to be 7d28f53a13e04b309c26268491395f3e
-        'hostname': 'unicefdemo.learningequality.org',
-    },
-    'mit-blossoms-demo': {
-        'hosts':['35.197.13.137'],                                              # TO DELETE
-        'channels_to_import': ['913efe9f14c65cb1b23402f21f056e99'],
-        'hostname': 'mit-blossoms-demo.learningequality.org', # Does not exist
-    },
-    'old-touchable-earth-demo': {                                               # TO DELETE
-        'hosts':['35.186.190.71'],
-        'channels_to_import': ['66cef05505fa550b970e69c3623e82ba'],
-        'hostname': 'te-demo.learningequality.org', # Does not exist
-    },
-    'old-serlo-demo': {
-        'hosts':['35.188.227.233'],                                             # TO DELETE
-        'channels_to_import': ['c089800ef73e5ef0ac1d0d9e1d193147'],
-        'hostname': 'serlo-demo.learningequality.org', # Does not exist
-    },
-    #
-    #
-    #
-    # NEW GCP ACCOUNT
     'mitblossoms-demo': {
         'hosts':['104.196.162.204'],
         'channels_to_import': ['913efe9f14c65cb1b23402f21f056e99'],
-        'hostname': 'mitblossoms-demo.learningequality.org',    # TODO: create DNS record
+        'hostname': 'mitblossoms-demo.learningequality.org',
     },
     'unicef-demo': {
         'hosts':['104.196.196.6'],
         'channels_to_import': ['7db80873586841e4a1c249b2bb8ba62d'],
-        'hostname': 'unicefdemo.learningequality.org',          # TODO: update to new IP
+        'hostname': 'unicefdemo.learningequality.org',
     },
     'serlo-demo': {
         'hosts':['104.196.182.229'],
         'channels_to_import': ['c089800ef73e5ef0ac1d0d9e1d193147'],
-        'hostname': 'serlo-demo.learningequality.org',          # TODO: create DNS record
+        'hostname': 'serlo-demo.learningequality.org',
     },
     'te-demo': {
         'hosts':['35.190.168.15'],
         'channels_to_import': ['66cef05505fa550b970e69c3623e82ba'],
-        'hostname': 'te-demo.learningequality.org',             # TODO: create DNS record
+        'hostname': 'te-demo.learningequality.org',
     },
     'sikana-demo': {
         'hosts':['104.196.110.174'],
@@ -71,7 +47,7 @@ env.roledefs = {
             '30c71c99c42c57d181e8aeafd2e15e5f', # ES
             '3e464ee12f6a50a781cddf59147b48b1', # EN
         ],
-        'hostname': 'sikana-demo.learningequality.org',         # TODO: create DNS record
+        'hostname': 'sikana-demo.learningequality.org',
     },
 }
 
@@ -96,15 +72,15 @@ GCP_BOOT_DISK_SIZE = '30GB'
 @task
 def create(instance_name):
     """
-    Creeate a GCP instance and associate a static IP address for it.
+    Create a GCP instance `instance_name` and associate a static IP with it.
     """
     # puts(green('You may need to run `gcloud init` before running this command.'))
-    # STEP 1: provision a static IP address
+    # STEP 1: reserve a static IP address
     reserve_ip_cmd =  'gcloud compute addresses create ' + instance_name
     reserve_ip_cmd += ' --region ' + GCP_REGION
     local(reserve_ip_cmd)
     #
-    # STEP 2: provision machien
+    # STEP 2: provision instance
     create_cmd =  'gcloud compute instances create ' + instance_name
     create_cmd += ' --zone ' + GCP_ZONE
     create_cmd += ' --machine-type f1-micro'
@@ -128,7 +104,7 @@ def create(instance_name):
 @task
 def delete(instance_name):
     """
-    Delete the GCP instance and it's associated IP address.
+    Delete the GCP instance `instance_name` and it's associated IP address.
     """
     delete_cmd = 'gcloud compute instances delete ' + instance_name + ' --quiet'
     local(delete_cmd)

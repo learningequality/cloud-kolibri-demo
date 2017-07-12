@@ -28,14 +28,14 @@ Using
 -----
 
   1. Update the `env.roledefs` info in `fabfile.py` inserting appropriate info:
-      - A short name for this role, e.g., `mitblossoms-demo`
+      - Use the instance name as the key for this role, e.g., `mitblossoms-demo`
       - The IP address of the new cloud host (obtained when created)
       - The channel id to load into Kolibri (obtained from content curation server)
       - A hostname that nginx will listen to (optional)
 
   2. To provision the demo server, run the command:
 
-         fab demoserver  -R mitblossoms-demo
+         fab -R mitblossoms-demo   demoserver
 
   3. Go the IP address or hostname and complete the Kolibri setup wizard
 
