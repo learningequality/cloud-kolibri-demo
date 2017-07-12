@@ -1,3 +1,4 @@
+import json
 import os
 
 import fabric
@@ -30,34 +31,70 @@ env.roledefs = {
         'hosts':['35.188.227.233'],
         'channels_to_import': ['c089800ef73e5ef0ac1d0d9e1d193147'],
         'hostname': 'serlo-demo.learningequality.org', # Does not exist
+    },
+    #
+    # NEW
+    'mitblossoms-demo': {
+        'hosts':['??'],
+        'channels_to_import': ['???'],
+        'hostname': '???.learningequality.org',
     }
 }
 
-env.user = 'ivan'
-
 # GLOBAL SETTTINGS
+env.user = 'ivan'
 CONFIG_DIR = './config'
 
 # INSTANCE SETTTINGS
-KOLIBRI_PEX_URL = 'https://github.com/learningequality/kolibri/releases/download/v0.4.3/kolibri-v0.4.3.pex'
+KOLIBRI_PEX_URL = 'https://files.slack.com/files-pri/T0KT5DC58-F664K783T/download/kolibri-v0.4.0-beta11-294-gd1737c50.pex?pub_secret=dbdfe634c7'
 KOLIBRI_LANG = 'en' # or 'sw-tz'
 KOLIBRI_HOME = '/kolibrihome'
 KOLIBRI_PORT = 9090
-KOLIBRI_PEX_FILE = os.path.basename(KOLIBRI_PEX_URL)
+KOLIBRI_PEX_FILE = os.path.basename(KOLIBRI_PEX_URL.split("?")[0]) # in case ?querystr...
 
+
+# GCP settings
+GCP_ZONE = 'us-east1-d'
+GCP_REGION = 'us-east1'
 
 @task
 def info():
     run('ps -aux')
 
+
 @task
-def provision():
-    msg="""
-    Manual steps required. Use your favourite cloud host provider
-    to provision a virtual machine running Debian. Edit this file
-    (`fabfile.py`) to add the cloud host's IP address to `env.hosts`.
-    """
-    puts(green(msg))
+def create(instance_name):
+    # puts(green('You may need to run `gcloud init` before running this command.'))
+    # STEP 1: provision a static IP address
+    reserve_ip_cmd =  'gcloud compute addresses create ' + instance_name
+    reserve_ip_cmd += ' --region ' + GCP_REGION
+    local(reserve_ip_cmd)
+    #
+    # STEP 2: provision machien
+    create_cmd =  'gcloud compute instances create ' + instance_name
+    create_cmd += ' --zone ' + GCP_ZONE
+    create_cmd += ' --machine-type f1-micro'
+    create_cmd += ' --boot-disk-size 30GB'
+    create_cmd += ' --image debian-8-jessie-v20170619'
+    create_cmd += ' --address ' + instance_name
+    create_cmd += ' --format json'
+    cmd_out = local(create_cmd, capture=True)
+    cmd_result = json.loads(cmd_out)
+    new_ip = cmd_result[0]['networkInterfaces'][0]['accessConfigs'][0]['natIP']
+    puts(green('Created demo instance ' + instance_name + ' with IP ' + new_ip))
+    puts(green('Please update the dictionary `env.roledefs` in `fabfile.py`:'))
+    # TODO: print exact dict template that user needed to add...
+
+
+@task
+def delete(instance_name):
+    delete_cmd = 'gcloud compute instances delete ' + instance_name + ' --quiet'
+    local(delete_cmd)
+    delete_ip_cmd = 'gcloud compute addresses delete ' + instance_name + ' --quiet'
+    local(delete_ip_cmd)
+    puts(green('Deleted instance ' + instance_name + ' and its static IP.'))
+
+
 
 @task
 def demoserver():
@@ -162,7 +199,15 @@ def import_channels():
                 run(base_cmd + ' importcontent -- network ' + channel_id)
     puts(green('Channels ' + str(channels_to_import) + ' imported.'))
 
+
 @task
 def restart_kolibri():
     sudo('service nginx restart')
     sudo('service supervisor restart')
+
+
+@task
+def stop_kolibri():
+    sudo('service nginx stop')
+    sudo('service supervisor stop')
+

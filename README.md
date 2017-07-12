@@ -13,10 +13,18 @@ Install
 
 
 
-Provision
----------
+Create instance
+---------------
+
+### Using command line
+
+    gcloud init
+    fab create:mitblossoms-demo
+
+### Using web interface
 
 See [docs/gcp_instance.md](docs/gcp_instance.md).
+
 
 
 Using
@@ -36,5 +44,11 @@ Using
 
   4. Go the IP address or hostname and complete the Kolibri setup wizard
 
+
+
+Decommission
+------------
+
+    fab delete:mitblossoms-demo
 
 
