@@ -49,21 +49,31 @@ env.roledefs = {
         ],
         'hostname': 'sikana-demo.learningequality.org',
     },
+    'rtl-bash': {
+        'hosts':['35.196.62.46'],
+        'channels_to_import': ['fb51dae6df7545af8455aa3a0c32048d'],
+        'hostname': 'rtl-bash.learningequality.org',
+    },
 }
-
-# fb51dae6df7545af8455aa3a0c32048d
 
 
 # GLOBAL SETTTINGS
-env.user = 'ivan'
+env.user = os.environ.get('USER')  # assume ur local username == remote username
 CONFIG_DIR = './config'
 
 # KOLIBRI SETTTINGS
-KOLIBRI_PEX_URL = 'https://github.com/learningequality/kolibri/releases/download/v0.5.0-beta3/kolibri-v0.5.0-beta3.pex'
+# KOLIBRI_PEX_URL = 'https://github.com/learningequality/kolibri/releases/download/v0.5.0-beta3/kolibri-v0.5.0-beta3.pex'
 KOLIBRI_LANG_DEFAULT = 'en' # or 'sw-tz'
 KOLIBRI_HOME = '/kolibrihome'
 KOLIBRI_PORT = 9090
-KOLIBRI_PEX_FILE = os.path.basename(KOLIBRI_PEX_URL.split("?")[0])  # in case ?querystr...
+# KOLIBRI_PEX_FILE = os.path.basename(KOLIBRI_PEX_URL.split("?")[0])  # in case ?querystr...
+
+
+# RTL hacking
+KOLIBRI_PEX_URL = 'https://www.googleapis.com/download/storage/v1/b/le-downloads/o/kolibri%2Fbuildkite%2Fbuild-false%2F1778%2Fkolibri-0.6.dev020170713064535-git.pex?generation=1499929132539205&alt=media'
+KOLIBRI_PEX_FILE = 'kolibri-0.6.dev020170713064535-git.pex'
+DJANGO_SETTINGS_MODULE = 'kolibri.deployment.default.settings.rtl'
+KOLIBRI_LANG_DEFAULT = 'rt-lft'
 
 # GCP SETTINGS
 GCP_ZONE = 'us-east1-d'
@@ -85,7 +95,7 @@ def create(instance_name):
     # STEP 2: provision instance
     create_cmd =  'gcloud compute instances create ' + instance_name
     create_cmd += ' --zone ' + GCP_ZONE
-    create_cmd += ' --machine-type f1-micro'
+    # create_cmd += ' --machine-type f1-micro'      # comment out so we get a normal sized-one
     create_cmd += ' --boot-disk-size ' + GCP_BOOT_DISK_SIZE
     create_cmd += ' --image-project debian-cloud --image debian-8-jessie-v20170619'
     create_cmd += ' --address ' + instance_name
@@ -156,7 +166,7 @@ def download_kolibri():
         sudo('mkdir -p ' + KOLIBRI_HOME)
         sudo('chmod 777 ' + KOLIBRI_HOME)
     with cd(KOLIBRI_HOME):
-        run('wget --no-verbose {} -O {}'.format(KOLIBRI_PEX_URL, KOLIBRI_PEX_FILE))
+        run('wget --no-verbose "{}" -O {}'.format(KOLIBRI_PEX_URL, KOLIBRI_PEX_FILE))
     puts(green('Kolibri pex downloaded.'))
 
 
@@ -197,6 +207,7 @@ def setup_kolibri(kolibri_lang=KOLIBRI_LANG_DEFAULT):
         'KOLIBRI_HOME': KOLIBRI_HOME,
         'KOLIBRI_PORT': KOLIBRI_PORT,
         'KOLIBRI_PEX_FILE': KOLIBRI_PEX_FILE,
+        'DJANGO_SETTINGS_MODULE': DJANGO_SETTINGS_MODULE,
     }
     upload_template(os.path.join(CONFIG_DIR, 'startkolibri.template.sh'),
                     os.path.join(KOLIBRI_HOME, 'startkolibri.sh'),
@@ -232,6 +243,11 @@ def import_channels():
 
 @task
 def info():
+    puts(green('Python version:'))
+    run('python --version')
+    puts(green('/kolibrihome contains:'))
+    run('ls -ltr /kolibrihome')
+    puts(green('Running processes:'))
     run('ps -aux')
 
 
