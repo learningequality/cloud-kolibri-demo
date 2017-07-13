@@ -52,7 +52,7 @@ env.roledefs = {
     'rtl-bash': {
         'hosts':['35.196.62.46'],
         'channels_to_import': ['fb51dae6df7545af8455aa3a0c32048d'],
-        'hostname': 'rtl-bash.learningequality.org',
+        'hostname': 'NONE.SINCE.USED.ONLY.FOR.JUL13.RTL.BASH',
     },
 }
 
@@ -239,6 +239,17 @@ def import_channels():
                 run(base_cmd + ' importchannel -- network ' + channel_id)
                 run(base_cmd + ' importcontent -- network ' + channel_id)
     puts(green('Channels ' + str(channels_to_import) + ' imported.'))
+
+
+@task
+def generat_euserdata():
+    """
+    Generates student usage data to demonstrate more of Kolibri's functionality.
+    """
+    base_cmd = 'python ' + os.path.join(KOLIBRI_HOME, KOLIBRI_PEX_FILE) + ' manage'
+    with shell_env(KOLIBRI_HOME=KOLIBRI_HOME):
+        run(base_cmd + ' generateuserdata')
+    puts(green('User data generation finished.'))
 
 
 @task
