@@ -54,6 +54,12 @@ env.roledefs = {
         'channels_to_import': ['fb51dae6df7545af8455aa3a0c32048d'],
         'hostname': 'NONE.SINCE.USED.ONLY.FOR.JUL13.RTL.BASH',
     },
+    'african-storybook-demo': {
+        'hosts':['35.185.108.58'],
+        'channels_to_import': ['f9d3e0e46ea25789bbed672ff6a399ed'],
+        'hostname': 'african-storybook-demo.learningequality.org', # Does not exist
+    },
+
 }
 
 
@@ -62,18 +68,11 @@ env.user = os.environ.get('USER')  # assume ur local username == remote username
 CONFIG_DIR = './config'
 
 # KOLIBRI SETTTINGS
-# KOLIBRI_PEX_URL = 'https://github.com/learningequality/kolibri/releases/download/v0.5.0-beta3/kolibri-v0.5.0-beta3.pex'
+KOLIBRI_PEX_URL = 'https://github.com/learningequality/kolibri/releases/download/v0.5.0-beta4/kolibri-v0.5.0-beta4.pex'
 KOLIBRI_LANG_DEFAULT = 'en' # or 'sw-tz'
 KOLIBRI_HOME = '/kolibrihome'
 KOLIBRI_PORT = 9090
-# KOLIBRI_PEX_FILE = os.path.basename(KOLIBRI_PEX_URL.split("?")[0])  # in case ?querystr...
-
-
-# RTL hacking
-KOLIBRI_PEX_URL = 'https://www.googleapis.com/download/storage/v1/b/le-downloads/o/kolibri%2Fbuildkite%2Fbuild-false%2F1778%2Fkolibri-0.6.dev020170713064535-git.pex?generation=1499929132539205&alt=media'
-KOLIBRI_PEX_FILE = 'kolibri-0.6.dev020170713064535-git.pex'
-DJANGO_SETTINGS_MODULE = 'kolibri.deployment.default.settings.rtl'
-KOLIBRI_LANG_DEFAULT = 'rt-lft'
+KOLIBRI_PEX_FILE = os.path.basename(KOLIBRI_PEX_URL.split("?")[0])  # in case ?querystr...
 
 # GCP SETTINGS
 GCP_ZONE = 'us-east1-d'
@@ -95,7 +94,7 @@ def create(instance_name):
     # STEP 2: provision instance
     create_cmd =  'gcloud compute instances create ' + instance_name
     create_cmd += ' --zone ' + GCP_ZONE
-    # create_cmd += ' --machine-type f1-micro'      # comment out so we get a normal sized-one
+    create_cmd += ' --machine-type f1-micro'
     create_cmd += ' --boot-disk-size ' + GCP_BOOT_DISK_SIZE
     create_cmd += ' --image-project debian-cloud --image debian-8-jessie-v20170619'
     create_cmd += ' --address ' + instance_name
@@ -207,8 +206,8 @@ def setup_kolibri(kolibri_lang=KOLIBRI_LANG_DEFAULT):
         'KOLIBRI_HOME': KOLIBRI_HOME,
         'KOLIBRI_PORT': KOLIBRI_PORT,
         'KOLIBRI_PEX_FILE': KOLIBRI_PEX_FILE,
-        'DJANGO_SETTINGS_MODULE': DJANGO_SETTINGS_MODULE,
     }
+
     upload_template(os.path.join(CONFIG_DIR, 'startkolibri.template.sh'),
                     os.path.join(KOLIBRI_HOME, 'startkolibri.sh'),
                     context=context,
@@ -266,7 +265,9 @@ def info():
 def restart_kolibri(post_restart_sleep=0):
     sudo('service nginx restart')
     sudo('service supervisor restart')
-    time.sleep(post_restart_sleep)
+    if post_restart_sleep > 0:
+        puts(green('Taking a pause for ' + post_restart_sleep + 'sec to let migrations run...'))
+        time.sleep(post_restart_sleep)
 
 
 @task
