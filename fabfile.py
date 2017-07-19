@@ -61,7 +61,10 @@ env.roledefs = {
     },
     'julybugbash': {
         'hosts':['35.196.15.190'],
-        'channels_to_import': ['<channel_id>'],
+        'channels_to_import': ['fb51dae6df7545af8455aa3a0c32048d', # portion control
+                               'ddf1e99ed45a4e41a60c440ca504cf41', # Greece mostly PDFs
+                               'bcd99d8aeef04ce6b9e25a88d87eedb7', # diversity of filetypes
+        ],
         'hostname': 'DOES.NOT.EXIST.julybugbash',
     },
 }
