@@ -273,7 +273,7 @@ def restart_kolibri(post_restart_sleep=0):
     sudo('service nginx restart')
     sudo('service supervisor restart')
     if post_restart_sleep > 0:
-        puts(green('Taking a pause for ' + post_restart_sleep + 'sec to let migrations run...'))
+        puts(green('Taking a pause for ' + str(post_restart_sleep) + 'sec to let migrations run...'))
         time.sleep(post_restart_sleep)
 
 
