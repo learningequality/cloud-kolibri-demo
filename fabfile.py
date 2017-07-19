@@ -59,7 +59,11 @@ env.roledefs = {
         'channels_to_import': ['f9d3e0e46ea25789bbed672ff6a399ed'],
         'hostname': 'african-storybook-demo.learningequality.org', # Does not exist
     },
-
+    'julybugbash': {
+        'hosts':['35.196.15.190'],
+        'channels_to_import': ['<channel_id>'],
+        'hostname': 'DOES.NOT.EXIST.julybugbash',
+    },
 }
 
 
