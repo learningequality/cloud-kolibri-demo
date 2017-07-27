@@ -37,8 +37,13 @@ Using
 
          fab -R mitblossoms-demo   demoserver
 
-  3. Go the IP address or hostname and complete the Kolibri setup wizard
+  3. Go the IP address or hostname and complete the Kolibri setup wizard.
+     By convention the Device Owner's username for demo servers is `devowner`.
 
+  4. Optionally, you can generate sample student learning data, so that coach
+     views will look more alive:
+
+         fab -R mitblossoms-demo   generateuserdata
 
 
 Updating

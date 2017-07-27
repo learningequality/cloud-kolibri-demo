@@ -67,6 +67,15 @@ env.roledefs = {
         ],
         'hostname': 'DOES.NOT.EXIST.julybugbash',
     },
+    'india-demo': {
+        'hosts':['35.185.88.71'],
+        'channels_to_import': ['053653a2a7fa436a8b3991115db18d25', # Touchable Earth
+                               # '620ef30860a65e7d8b2607ed03cc318f', # Pratham Open School (not published yet)
+                               '131e543dbecf5776bb13cfcfddf05605', # Pratham Books Storyweaver
+                               # '620ef30860a65e7d8b2607ed03cc318f', # Khan Academy (hi)
+        ],
+        'hostname': 'no.hostname.because.temporary.org',
+    },
 }
 
 
@@ -248,7 +257,7 @@ def import_channels():
 
 
 @task
-def generat_euserdata():
+def generateuserdata():
     """
     Generates student usage data to demonstrate more of Kolibri's functionality.
     """
