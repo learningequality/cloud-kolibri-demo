@@ -76,6 +76,11 @@ env.roledefs = {
         ],
         'hostname': 'no.hostname.because.temporary.org',
     },
+    'tessa-demo': {
+        'hosts':['35.185.77.25'],
+        'channels_to_import': ['45605d184d985e74960015190a6f4e4f'],
+        'hostname': 'tessa-demo.learningequality.org',
+    },
 }
 
 
