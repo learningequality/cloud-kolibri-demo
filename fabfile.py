@@ -81,6 +81,11 @@ env.roledefs = {
         'channels_to_import': ['45605d184d985e74960015190a6f4e4f'],
         'hostname': 'tessa-demo.learningequality.org',
     },
+    'grammar-demo': {
+        'hosts':['35.196.177.88'],
+        'channels_to_import': ['e1d48c95c88341e5ba3008e4d970a615'],
+        'hostname': 'grammar-demo.learningequality.org', # DOES NOT EXIST
+    },
 }
 
 
@@ -89,7 +94,8 @@ env.user = os.environ.get('USER')  # assume ur local username == remote username
 CONFIG_DIR = './config'
 
 # KOLIBRI SETTTINGS
-KOLIBRI_PEX_URL = 'https://github.com/learningequality/kolibri/releases/download/v0.5.0-beta4/kolibri-v0.5.0-beta4.pex'
+# KOLIBRI_PEX_URL = 'https://github.com/learningequality/kolibri/releases/download/v0.5.0-beta4/kolibri-v0.5.0-beta4.pex'
+KOLIBRI_PEX_URL = 'https://github.com/learningequality/kolibri/releases/download/v0.6.0-alpha1/kolibri-0.6.dev020170802200342-git.pex'
 KOLIBRI_LANG_DEFAULT = 'en' # or 'sw-tz'
 KOLIBRI_HOME = '/kolibrihome'
 KOLIBRI_PORT = 9090
