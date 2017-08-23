@@ -94,8 +94,7 @@ env.user = os.environ.get('USER')  # assume ur local username == remote username
 CONFIG_DIR = './config'
 
 # KOLIBRI SETTTINGS
-# KOLIBRI_PEX_URL = 'https://github.com/learningequality/kolibri/releases/download/v0.5.0-beta4/kolibri-v0.5.0-beta4.pex'
-KOLIBRI_PEX_URL = 'https://github.com/learningequality/kolibri/releases/download/v0.6.0-alpha1/kolibri-0.6.dev020170802200342-git.pex'
+KOLIBRI_PEX_URL = 'https://github.com/learningequality/kolibri/releases/download/v0.5.0-beta8/kolibri-v0.5.0-beta8.pex'
 KOLIBRI_LANG_DEFAULT = 'en' # or 'sw-tz'
 KOLIBRI_HOME = '/kolibrihome'
 KOLIBRI_PORT = 9090
