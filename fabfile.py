@@ -86,6 +86,11 @@ env.roledefs = {
         'channels_to_import': ['e1d48c95c88341e5ba3008e4d970a615'],
         'hostname': 'grammar-demo.learningequality.org', # DOES NOT EXIST
     },
+    'unete-demo': {
+        'hosts':['35.196.220.94'],
+        'channels_to_import': ['4d2dea0cdd424c6ab5f76e8244507d6e'],
+        'hostname': 'unete-demo.learningequality.org',
+    },
 }
 
 
