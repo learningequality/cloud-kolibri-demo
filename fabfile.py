@@ -49,23 +49,10 @@ env.roledefs = {
         ],
         'hostname': 'sikana-demo.learningequality.org',
     },
-    'rtl-bash': {
-        'hosts':['35.196.62.46'],
-        'channels_to_import': ['fb51dae6df7545af8455aa3a0c32048d'],
-        'hostname': 'NONE.SINCE.USED.ONLY.FOR.JUL13.RTL.BASH',
-    },
     'african-storybook-demo': {
         'hosts':['35.185.108.58'],
         'channels_to_import': ['f9d3e0e46ea25789bbed672ff6a399ed'],
         'hostname': 'african-storybook-demo.learningequality.org', # Does not exist
-    },
-    'julybugbash': {
-        'hosts':['35.196.15.190'],
-        'channels_to_import': ['fb51dae6df7545af8455aa3a0c32048d', # portion control
-                               'ddf1e99ed45a4e41a60c440ca504cf41', # Greece mostly PDFs
-                               'bcd99d8aeef04ce6b9e25a88d87eedb7', # diversity of filetypes
-        ],
-        'hostname': 'DOES.NOT.EXIST.julybugbash',
     },
     'india-demo': {
         'hosts':['35.185.88.71'],
@@ -79,7 +66,7 @@ env.roledefs = {
     'tessa-demo': {
         'hosts':['35.185.77.25'],
         'channels_to_import': ['45605d184d985e74960015190a6f4e4f'],
-        'hostname': 'tessa-demo.learningequality.org',
+        'hostname': 'tessa-demo.learningequality.org', # DNE
     },
     'grammar-demo': {
         'hosts':['35.196.177.88'],
