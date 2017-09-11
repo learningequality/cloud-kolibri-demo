@@ -78,15 +78,29 @@ env.roledefs = {
         'channels_to_import': ['4d2dea0cdd424c6ab5f76e8244507d6e'],
         'hostname': 'unete-demo.learningequality.org',
     },
+    'engageny-demo': {
+        'hosts':['104.196.8.90'],
+        'channels_to_import': ['ff5988e9bc1b542c96b4568e20144457'],
+        'hostname': 'engageny-demo.learningequality.org',
+    },
+    'hack-session-sept-7': {
+        'hosts':['104.196.144.58'],
+        'channels_to_import': [],
+        'hostname': 'hack-session-sept-7.learningequality.org',
+    },
+    'aflatoun-demo': {
+        'hosts':['35.196.3.200'],
+        'channels_to_import': ['8a2d480dbc9b53408c688e8188326b16', '8166e765a0095bfaa49e98d034653dc5'],
+        'hostname': 'aflatoun-demo.learningequality.org', # DNE yet
+    },
 }
-
 
 # GLOBAL SETTTINGS
 env.user = os.environ.get('USER')  # assume ur local username == remote username
 CONFIG_DIR = './config'
 
 # KOLIBRI SETTTINGS
-KOLIBRI_PEX_URL = 'https://www.googleapis.com/download/storage/v1/b/le-downloads/o/kolibri%2Fbuildkite%2Fbuild-2045%2F2279%2Fkolibri-v0.5.0-beta10-2-g20ff2d0.pex?generation=1504025288757633&alt=media'
+KOLIBRI_PEX_URL = 'https://github.com/learningequality/kolibri/releases/download/v0.5.0/kolibri-v0.5.0.pex'
 KOLIBRI_LANG_DEFAULT = 'en' # or 'sw-tz'
 KOLIBRI_HOME = '/kolibrihome'
 KOLIBRI_PORT = 9090
@@ -152,7 +166,7 @@ def demoserver():
     download_kolibri()
     configure_nginx()
     setup_kolibri()
-    restart_kolibri(post_restart_sleep=30)  # wait for DB migration to happen...
+    restart_kolibri(post_restart_sleep=45)  # wait for DB migration to happen...
     import_channels()
     restart_kolibri()
     puts(green('Kolibri demo server setup complete.'))
