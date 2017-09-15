@@ -83,15 +83,15 @@ env.roledefs = {
         'channels_to_import': ['ff5988e9bc1b542c96b4568e20144457'],
         'hostname': 'engageny-demo.learningequality.org',
     },
-    'hack-session-sept-7': {
-        'hosts':['104.196.144.58'],
-        'channels_to_import': [],
-        'hostname': 'hack-session-sept-7.learningequality.org',
-    },
     'aflatoun-demo': {
         'hosts':['35.196.3.200'],
         'channels_to_import': ['8a2d480dbc9b53408c688e8188326b16', '8166e765a0095bfaa49e98d034653dc5'],
         'hostname': 'aflatoun-demo.learningequality.org', # DNE yet
+    },
+    'openstax-demo': {
+        'hosts':['35.196.171.6'],
+        'channels_to_import': ['fc47aee82e0153e2a30197d3fdee1128'],
+        'hostname': 'openstax-demo.learningequality.org', # DNE
     },
 }
 
