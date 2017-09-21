@@ -93,14 +93,20 @@ env.roledefs = {
         'channels_to_import': ['fc47aee82e0153e2a30197d3fdee1128'],
         'hostname': 'openstax-demo.learningequality.org', # DNE
     },
+    'le-060-beta': {
+        'hosts':['35.185.84.118'],
+        'channels_to_import': ['fb51dae6df7545af8455aa3a0c32048d'],
+        'facility_name': 'Test Server for 0.6 betas',
+        'hostname': 'le-060-beta.learningequality.org',
+    },
 }
 
-# GLOBAL SETTTINGS
+# FAB SETTTINGS
 env.user = os.environ.get('USER')  # assume ur local username == remote username
 CONFIG_DIR = './config'
 
 # KOLIBRI SETTTINGS
-KOLIBRI_PEX_URL = 'https://github.com/learningequality/kolibri/releases/download/v0.5.0/kolibri-v0.5.0.pex'
+KOLIBRI_PEX_URL = 'https://github.com/learningequality/kolibri/releases/download/v0.6.0-beta2/kolibri-0.6.dev020170921010354-git.pex'
 KOLIBRI_LANG_DEFAULT = 'en' # or 'sw-tz'
 KOLIBRI_HOME = '/kolibrihome'
 KOLIBRI_PORT = 9090
@@ -137,11 +143,12 @@ def create(instance_name):
     new_ip = cmd_result[0]['networkInterfaces'][0]['accessConfigs'][0]['natIP']
     puts(green('Created demo instance ' + instance_name + ' with IP ' + new_ip))
     puts(green('Add this paragraph to the dict `env.roledefs` in `fabfile.py`:'))
-    puts(blue("    '%s': {"                                     % instance_name ))
-    puts(blue("        'hosts':['%s'],"                         % new_ip        ))
-    puts(blue("        'channels_to_import': ['<channel_id>'],"                 ))
-    puts(blue("        'hostname': '%s.learningequality.org',"  % instance_name ))
-    puts(blue("    },"                                                          ))
+    puts(blue("    '%s': {"                                     % instance_name    ))
+    puts(blue("        'hosts':['%s'],"                         % new_ip           ))
+    puts(blue("        'channels_to_import': ['<channel_id>'],"                    ))
+    puts(blue("        'facility_name': '" + instance_name.replace('-', ' ') + "',"))
+    puts(blue("        'hostname': '%s.learningequality.org',"  % instance_name    ))
+    puts(blue("    },"                                                             ))
 
 
 @task
@@ -165,8 +172,9 @@ def demoserver():
     install_base()
     download_kolibri()
     configure_nginx()
-    setup_kolibri()
+    configure_kolibri()
     restart_kolibri(post_restart_sleep=45)  # wait for DB migration to happen...
+    setup_kolibri()
     import_channels()
     restart_kolibri()
     puts(green('Kolibri demo server setup complete.'))
@@ -175,14 +183,15 @@ def demoserver():
 @task
 def install_base():
     """
-    Updates base system and installs prerequisite system pacakges.
+    Install base system pacakges and prerequisites.
     """
-    puts('Installing and updating base system (might take a few minutes).')
+    puts('Installing base system packages (this might take a few minutes).')
     with hide('running', 'stdout', 'stderr'):
         sudo('apt-get update -qq')
-        sudo('apt-get upgrade -y')
-        sudo('apt-get install -y software-properties-common curl')
-        sudo('apt-get install -y python3 python-pip git gettext python-sphinx')
+        # sudo('apt-get upgrade -y')  # no need + slows down process for nothing
+        sudo('apt-get install -y software-properties-common')
+        sudo('apt-get install -y curl vim git')
+        sudo('apt-get install -y python3 python-pip gettext python-sphinx')
         sudo('apt-get install -y nginx')
         sudo('apt-get install -y supervisor')
     puts(green('Base packages installed.'))
@@ -226,9 +235,9 @@ def configure_nginx():
 
 
 @task
-def setup_kolibri(kolibri_lang=KOLIBRI_LANG_DEFAULT):
+def configure_kolibri(kolibri_lang=KOLIBRI_LANG_DEFAULT):
     """
-    Setup kolibri startup script and supervisor config.
+    Upload kolibri startup script and configure supervisor
     Args:
       - `kolibri_lang` in ['en','sw-tz','es-es','es-mx','fr-fr','pt-pt','hi-in']
     """
@@ -253,7 +262,33 @@ def setup_kolibri(kolibri_lang=KOLIBRI_LANG_DEFAULT):
                     '/etc/supervisor/conf.d/kolibri.conf',
                     context=context, use_jinja=True, use_sudo=True, backup=False)
     sudo('service supervisor restart')
-    puts(green('Kolibri start script and supervisor setup done.'))
+    puts(green('Kolibri start script and supervisor config done.'))
+
+
+@task
+def setup_kolibri(kolibri_lang=KOLIBRI_LANG_DEFAULT):
+    """
+    Setup kolibri facility so that
+    Args:
+      - `kolibri_lang` in ['en','sw-tz','es-es','es-mx','fr-fr','pt-pt','hi-in']
+    """
+    current_role = env.effective_roles[0]
+    role = env.roledefs[current_role]
+    facility_name = role.get('facility_name', current_role.replace('-', ' '))
+
+    # facility setup script
+    context = {
+        'KOLIBRI_LANG': kolibri_lang,
+        'KOLIBRI_FACILITY_NAME': facility_name,
+    }
+    upload_template(os.path.join(CONFIG_DIR, 'setupkolibri.template.sh'),
+                    os.path.join(KOLIBRI_HOME, 'setupkolibri.sh'),
+                    context=context,
+                    mode='0755', use_jinja=True, use_sudo=True, backup=False)
+
+    setup_script_path = os.path.join(KOLIBRI_HOME, 'setupkolibri.sh')
+    run(setup_script_path)
+    puts(green('Kolibri facility setup done.'))
 
 
 @task
