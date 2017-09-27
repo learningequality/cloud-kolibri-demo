@@ -106,7 +106,7 @@ env.user = os.environ.get('USER')  # assume ur local username == remote username
 CONFIG_DIR = './config'
 
 # KOLIBRI SETTTINGS
-KOLIBRI_PEX_URL = 'https://github.com/learningequality/kolibri/releases/download/v0.6.0-beta2/kolibri-0.6.dev020170921010354-git.pex'
+KOLIBRI_PEX_URL = 'https://www.googleapis.com/download/storage/v1/b/le-downloads/o/kolibri%2Fbuildkite%2Fbuild-2239%2F2670%2Fkolibri-0.6.dev020170921163522-git.pex?generation=1506299744966641&alt=media'
 KOLIBRI_LANG_DEFAULT = 'en' # or 'sw-tz'
 KOLIBRI_HOME = '/kolibrihome'
 KOLIBRI_PORT = 9090
@@ -352,7 +352,7 @@ def delete_kolibri():
 
 
 @task
-def update_kolibri(kolibri_lang=None):
+def update_kolibri(kolibri_lang=KOLIBRI_LANG_DEFAULT):
     """
     Use this task to re-install kolibri:
       - (re)download the Kolibri pex from KOLIBRI_PEX_URL
@@ -361,6 +361,10 @@ def update_kolibri(kolibri_lang=None):
     """
     stop_kolibri()
     download_kolibri()
+    configure_kolibri()
+    restart_kolibri(post_restart_sleep=45)  # wait for DB migration to happen...
     setup_kolibri(kolibri_lang=kolibri_lang)
+    import_channels()
     restart_kolibri()
+    puts(green('Kolibri server update complete.'))
 
