@@ -111,6 +111,12 @@ env.roledefs = {
         'facility_name': 'upgrade5',
         'hostname': 'upgrade5.learningequality.org',
     },
+    'upgrade4again': {
+        'hosts':['35.185.29.158'],
+        'channels_to_import': [],
+        'facility_name': 'upgrade4again',
+        'hostname': 'upgrade4again.learningequality.org',
+    },
 }
 
 # FAB SETTTINGS
