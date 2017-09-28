@@ -4,6 +4,11 @@ Kolibri demo in the cloud
 Setup a kolibri demo server from any channel.
 
 
+TODO
+----
+Figure out if KOLIBRI_LANGUAGE is necessary for cmd line or a Facility setting now
+
+
 Install
 -------
 

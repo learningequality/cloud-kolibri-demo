@@ -99,6 +99,18 @@ env.roledefs = {
         'facility_name': 'Test Server for 0.6 betas',
         'hostname': 'le-060-beta.learningequality.org',
     },
+    'upgrade4': {
+        'hosts':['35.196.106.44'],
+        'channels_to_import': ['bcd99d8aeef04ce6b9e25a88d87eedb7', 'fb51dae6df7545af8455aa3a0c32048d'],
+        'facility_name': 'upgrade4',
+        'hostname': 'upgrade4.learningequality.org',
+    },
+    'upgrade5': {
+        'hosts':['35.196.195.91'],
+        'channels_to_import': ['bcd99d8aeef04ce6b9e25a88d87eedb7', 'fb51dae6df7545af8455aa3a0c32048d'],
+        'facility_name': 'upgrade5',
+        'hostname': 'upgrade5.learningequality.org',
+    },
 }
 
 # FAB SETTTINGS
@@ -106,7 +118,14 @@ env.user = os.environ.get('USER')  # assume ur local username == remote username
 CONFIG_DIR = './config'
 
 # KOLIBRI SETTTINGS
-KOLIBRI_PEX_URL = 'https://www.googleapis.com/download/storage/v1/b/le-downloads/o/kolibri%2Fbuildkite%2Fbuild-2239%2F2670%2Fkolibri-0.6.dev020170921163522-git.pex?generation=1506299744966641&alt=media'
+# latest 0.4
+# KOLIBRI_PEX_URL = 'https://github.com/learningequality/kolibri/releases/download/v0.4.5/kolibri-v0.4.5.pex'
+# latest 0.5 (with patch for channel import fix)
+KOLIBRI_PEX_URL = 'https://www.googleapis.com/download/storage/v1/b/le-downloads/o/kolibri%2Fbuildkite%2Fbuild-2093%2F2352%2Fkolibri-v0.5.0-1-g2681f11.pex?generation=1504282960738136&alt=media'
+# latest 0.6
+# KOLIBRI_PEX_URL = 'https://www.googleapis.com/download/storage/v1/b/le-downloads/o/kolibri%2Fbuildkite%2Fbuild-2297%2F2715%2Fkolibri-0.6.dev020170928200752-git.pex?generation=1506630165317410&alt=media'
+
+
 KOLIBRI_LANG_DEFAULT = 'en' # or 'sw-tz'
 KOLIBRI_HOME = '/kolibrihome'
 KOLIBRI_PORT = 9090
