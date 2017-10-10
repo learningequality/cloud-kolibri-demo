@@ -99,6 +99,18 @@ env.roledefs = {
         'facility_name': 'Test Server for 0.6 betas',
         'hostname': 'le-060-beta.learningequality.org',
     },
+    'open-osmosis-demo': {
+        'hosts':['35.196.195.91'],
+        'channels_to_import': ['8b28761bac075deeb66adc6c80ef119c'],
+        'facility_name': 'open osmosis demo',
+        'hostname': 'open-osmosis-demo.learningequality.org',
+    },
+    'firki-demo': {
+        'hosts':['35.196.111.235'],
+        'channels_to_import': ['9fd964d4c40a5ea1b96c1bc1b3830e72'],
+        'facility_name': 'firki demo',
+        'hostname': 'firki-demo.learningequality.org',  # D.N.E.
+    },
 }
 
 # FAB SETTTINGS
