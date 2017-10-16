@@ -112,6 +112,12 @@ env.roledefs = {
         'facility_name': 'firki demo',
         'hostname': 'firki-demo.learningequality.org',  # D.N.E.
     },
+    'tahrir-academy-demo': {
+        'hosts':['104.196.194.35'],
+        'channels_to_import': ['310ec19477d15cf7b9fed98551ba1e1f'],
+        'facility_name': 'Tahrir Academy Demo Server',
+        'hostname': 'tahrir-academy-demo.learningequality.org',
+    },
 }
 
 # FAB SETTTINGS
