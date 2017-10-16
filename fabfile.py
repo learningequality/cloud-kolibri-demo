@@ -1,3 +1,4 @@
+import dns.resolver
 import json
 import os
 import time
@@ -387,3 +388,25 @@ def update_kolibri(kolibri_lang=KOLIBRI_LANG_DEFAULT):
     restart_kolibri()
     puts(green('Kolibri server update complete.'))
 
+
+@task
+def checkdns():
+    """
+    Checks if DNS lookup matches hosts IP.
+    """
+    puts(blue('Checking DNS records for all demo servers.'))
+    for role_name, role in env.roledefs.items():
+        assert len(role['hosts'])==1, 'Multiple hosts found for role'
+        host_ip = role['hosts'][0]
+        hostname = role['hostname']
+        results = []
+        try:
+            for rdata in dns.resolver.query(hostname, 'A'):
+                results.append(rdata)
+            results_text = [r.to_text().rstrip('.') for r in results]
+            if host_ip in results_text:
+                print('DNS for', role_name, 'OK')
+            else:
+                print('WRONG DNS for', role_name, 'Hostname:', hostname, 'Expected:', host_ip, 'Got:', results_text)
+        except dns.resolver.NoAnswer:
+            print('MISSING DNS for', role_name, 'Hostname:', hostname, 'Expected:', host_ip)
