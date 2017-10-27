@@ -3,16 +3,37 @@ import json
 import os
 import time
 
-import fabric
-from fabric.api import env, execute, task, local, sudo, run
-from fabric.api import get, put, execute, require
+from fabric.api import env, task, local, sudo, run
+from fabric.api import get, put, require
 from fabric.colors import red, green, blue, yellow
 from fabric.context_managers import cd, prefix, show, hide, shell_env
 from fabric.contrib.files import exists, sed, upload_template
 from fabric.utils import puts
 
 
-# ROLEDEFS
+# FAB SETTTINGS
+################################################################################
+env.user = os.environ.get('USER')  # assume ur local username == remote username
+CONFIG_DIR = './config'
+
+# KOLIBRI SETTTINGS
+################################################################################
+# latest 0.4
+# KOLIBRI_PEX_URL = 'https://github.com/learningequality/kolibri/releases/download/v0.4.5/kolibri-v0.4.5.pex'
+# latest 0.5 (with patch for channel import fix)
+# KOLIBRI_PEX_URL = 'https://www.googleapis.com/download/storage/v1/b/le-downloads/o/kolibri%2Fbuildkite%2Fbuild-2093%2F2352%2Fkolibri-v0.5.0-1-g2681f11.pex?generation=1504282960738136&alt=media'
+# latest 0.6
+KOLIBRI_PEX_URL = 'https://www.googleapis.com/download/storage/v1/b/le-downloads/o/kolibri%2Fbuildkite%2Fbuild-2515%2F3206%2Fkolibri-0.6.dev020171024164610-git.pex?generation=1508865247886067&alt=media'
+KOLIBRI_LANG_DEFAULT = 'en' # or 'sw-tz'
+KOLIBRI_HOME = '/kolibrihome'
+KOLIBRI_PORT = 9090
+KOLIBRI_PEX_FILE = os.path.basename(KOLIBRI_PEX_URL.split("?")[0])  # in case ?querystr...
+
+
+
+# INVENTORY
+################################################################################
+
 env.roledefs = {
     'mitblossoms-demo': {
         'hosts':['104.196.162.204'],
@@ -96,7 +117,12 @@ env.roledefs = {
     },
     'le-060-beta': {
         'hosts':['35.185.84.118'],
-        'channels_to_import': ['fb51dae6df7545af8455aa3a0c32048d', '2b1ca4c771594ff8b28e4a9f6534128b'],
+        'channels_to_import': [
+            'fb51dae6df7545af8455aa3a0c32048d',   # Portion Control
+            '2b1ca4c771594ff8b28e4a9f6534128b',   # Instant Schools (test)
+            '93a5bfcfa2a74962be843288aefcfc0e',   # Khan Academy Hisabati (Tanzania)
+            '11d9de56da744f98877cc9fe710bb78d',   # Instan Schools (Math)
+        ],
         'facility_name': 'Test Server for 0.6 betas',
         'hostname': 'le-060-beta.learningequality.org',
     },
@@ -120,29 +146,15 @@ env.roledefs = {
     },
 }
 
-# FAB SETTTINGS
-env.user = os.environ.get('USER')  # assume ur local username == remote username
-CONFIG_DIR = './config'
-
-# KOLIBRI SETTTINGS
-# latest 0.4
-# KOLIBRI_PEX_URL = 'https://github.com/learningequality/kolibri/releases/download/v0.4.5/kolibri-v0.4.5.pex'
-# latest 0.5 (with patch for channel import fix)
-# KOLIBRI_PEX_URL = 'https://www.googleapis.com/download/storage/v1/b/le-downloads/o/kolibri%2Fbuildkite%2Fbuild-2093%2F2352%2Fkolibri-v0.5.0-1-g2681f11.pex?generation=1504282960738136&alt=media'
-# latest 0.6
-KOLIBRI_PEX_URL = 'https://github.com/learningequality/kolibri/releases/download/v0.6.0-beta4/kolibri-0.6.dev020171003222310-git.pex'
 
 
-KOLIBRI_LANG_DEFAULT = 'en' # or 'sw-tz'
-KOLIBRI_HOME = '/kolibrihome'
-KOLIBRI_PORT = 9090
-KOLIBRI_PEX_FILE = os.path.basename(KOLIBRI_PEX_URL.split("?")[0])  # in case ?querystr...
+# PROVIDIONING
+################################################################################
 
 # GCP SETTINGS
 GCP_ZONE = 'us-east1-d'
 GCP_REGION = 'us-east1'
 GCP_BOOT_DISK_SIZE = '30GB'
-
 
 @task
 def create(instance_name):
@@ -190,6 +202,9 @@ def delete(instance_name):
 
 
 
+# HIGH LEVEL API
+################################################################################
+
 @task
 def demoserver():
     """
@@ -207,6 +222,27 @@ def demoserver():
 
 
 @task
+def update_kolibri(kolibri_lang=KOLIBRI_LANG_DEFAULT):
+    """
+    Use this task to re-install kolibri:
+      - (re)download the Kolibri pex from KOLIBRI_PEX_URL
+      - overwrite the startup script /kolibrihome/startkolibri.sh
+      - overwrite the supervisor script /etc/supervisor/conf.d/kolibri.conf.
+    """
+    stop_kolibri()
+    download_kolibri()
+    configure_kolibri()
+    restart_kolibri(post_restart_sleep=45)  # wait for DB migration to happen...
+    import_channels()
+    restart_kolibri()
+    puts(green('Kolibri server update complete.'))
+
+
+
+# SYSADMIN TASKS
+################################################################################
+
+@task
 def install_base():
     """
     Install base system pacakges and prerequisites.
@@ -216,7 +252,7 @@ def install_base():
         sudo('apt-get update -qq')
         # sudo('apt-get upgrade -y')  # no need + slows down process for nothing
         sudo('apt-get install -y software-properties-common')
-        sudo('apt-get install -y curl vim git')
+        sudo('apt-get install -y curl vim git sqlite3')
         sudo('apt-get install -y python3 python-pip gettext python-sphinx')
         sudo('apt-get install -y nginx')
         sudo('apt-get install -y supervisor')
@@ -324,13 +360,22 @@ def import_channels():
     """
     current_role = env.effective_roles[0]
     channels_to_import = env.roledefs[current_role]['channels_to_import']
+    for channel_id in channels_to_import:
+        import_channel(channel_id)
+    puts(green('Channels ' + str(channels_to_import) + ' imported.'))
+
+
+@task
+def import_channel(channel_id):
+    """
+    Import the channels in `channels_to_import` using the command line interface.
+    """
     base_cmd = 'python ' + os.path.join(KOLIBRI_HOME, KOLIBRI_PEX_FILE) + ' manage'
     with hide('stdout'):
         with shell_env(KOLIBRI_HOME=KOLIBRI_HOME):
-            for channel_id in channels_to_import:
-                run(base_cmd + ' importchannel -- network ' + channel_id)
-                run(base_cmd + ' importcontent -- network ' + channel_id)
-    puts(green('Channels ' + str(channels_to_import) + ' imported.'))
+            run(base_cmd + ' importchannel -- network ' + channel_id)
+            run(base_cmd + ' importcontent -- network ' + channel_id)
+    puts(green('Channel ' + channel_id + ' imported.'))
 
 
 @task
@@ -345,29 +390,18 @@ def generateuserdata():
 
 
 @task
-def info():
-    puts(green('Python version:'))
-    run('python --version')
-    puts(green('/kolibrihome contains:'))
-    run('ls -ltr /kolibrihome')
-    puts(green('Running processes:'))
-    run('ps -aux')
-
-
-@task
 def restart_kolibri(post_restart_sleep=0):
     sudo('service nginx restart')
     sudo('service supervisor restart')
+    sudo('supervisorctl restart kolibri')
     if post_restart_sleep > 0:
         puts(green('Taking a pause for ' + str(post_restart_sleep) + 'sec to let migrations run...'))
         time.sleep(post_restart_sleep)
-
 
 @task
 def stop_kolibri():
     sudo('service nginx stop')
     sudo('service supervisor stop')
-
 
 @task
 def delete_kolibri():
@@ -377,22 +411,18 @@ def delete_kolibri():
     sudo('rm /etc/supervisor/conf.d/kolibri.conf')
 
 
+
+# UTILS
+################################################################################
+
 @task
-def update_kolibri(kolibri_lang=KOLIBRI_LANG_DEFAULT):
-    """
-    Use this task to re-install kolibri:
-      - (re)download the Kolibri pex from KOLIBRI_PEX_URL
-      - overwrite the startup script /kolibrihome/startkolibri.sh
-      - overwrite the supervisor script /etc/supervisor/conf.d/kolibri.conf.
-    """
-    stop_kolibri()
-    download_kolibri()
-    configure_kolibri()
-    restart_kolibri(post_restart_sleep=45)  # wait for DB migration to happen...
-    setup_kolibri(kolibri_lang=kolibri_lang)
-    import_channels()
-    restart_kolibri()
-    puts(green('Kolibri server update complete.'))
+def info():
+    puts(green('Python version:'))
+    run('python --version')
+    puts(green('/kolibrihome contains:'))
+    run('ls -ltr /kolibrihome')
+    puts(green('Running processes:'))
+    run('ps -aux')
 
 
 @task
@@ -416,3 +446,4 @@ def checkdns():
                 print('WRONG DNS for', role_name, 'Hostname:', hostname, 'Expected:', host_ip, 'Got:', results_text)
         except dns.resolver.NoAnswer:
             print('MISSING DNS for', role_name, 'Hostname:', hostname, 'Expected:', host_ip)
+
