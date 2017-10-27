@@ -258,7 +258,7 @@ def install_base():
         sudo('apt-get install -y nginx')
         sudo('apt-get install -y supervisor')
     puts('Creating UNIX user ' + KOLIBRI_USER)
-    sudo('adduser --disabled-password ' + KOLIBRI_USER)
+    sudo('useradd ' + KOLIBRI_USER)
     puts(green('Base install steps finished.'))
 
 
