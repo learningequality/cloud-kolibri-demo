@@ -28,6 +28,7 @@ KOLIBRI_LANG_DEFAULT = 'en' # or 'sw-tz'
 KOLIBRI_HOME = '/kolibrihome'
 KOLIBRI_PORT = 9090
 KOLIBRI_PEX_FILE = os.path.basename(KOLIBRI_PEX_URL.split("?")[0])  # in case ?querystr...
+KOLIBRI_USER = 'kolibri'
 
 
 
@@ -214,7 +215,7 @@ def demoserver():
     download_kolibri()
     configure_nginx()
     configure_kolibri()
-    restart_kolibri(post_restart_sleep=45)  # wait for DB migration to happen...
+    restart_kolibri(post_restart_sleep=65)  # wait for DB migration to happen...
     setup_kolibri()
     import_channels()
     restart_kolibri()
@@ -232,7 +233,7 @@ def update_kolibri(kolibri_lang=KOLIBRI_LANG_DEFAULT):
     stop_kolibri()
     download_kolibri()
     configure_kolibri()
-    restart_kolibri(post_restart_sleep=45)  # wait for DB migration to happen...
+    restart_kolibri(post_restart_sleep=65)  # wait for DB migration to happen...
     import_channels()
     restart_kolibri()
     puts(green('Kolibri server update complete.'))
@@ -256,7 +257,9 @@ def install_base():
         sudo('apt-get install -y python3 python-pip gettext python-sphinx')
         sudo('apt-get install -y nginx')
         sudo('apt-get install -y supervisor')
-    puts(green('Base packages installed.'))
+    puts('Creating UNIX user ' + KOLIBRI_USER)
+    sudo('adduser --disabled-password ' + KOLIBRI_USER)
+    puts(green('Base install steps finished.'))
 
 
 @task
@@ -269,6 +272,7 @@ def download_kolibri():
         sudo('chmod 777 ' + KOLIBRI_HOME)
     with cd(KOLIBRI_HOME):
         run('wget --no-verbose "{}" -O {}'.format(KOLIBRI_PEX_URL, KOLIBRI_PEX_FILE))
+    sudo('chown -R {}:{}  {}'.format(KOLIBRI_USER, KOLIBRI_USER, KOLIBRI_HOME))
     puts(green('Kolibri pex downloaded.'))
 
 
@@ -291,8 +295,10 @@ def configure_nginx():
     upload_template(os.path.join(CONFIG_DIR,'nginx_site.template.conf'),
                     '/etc/nginx/sites-available/kolibri.conf',
                     context=context, use_jinja=True, use_sudo=True, backup=False)
+    sudo('chown root:root /etc/nginx/sites-available/kolibri.conf')
     sudo('ln -s /etc/nginx/sites-available/kolibri.conf /etc/nginx/sites-enabled/kolibri.conf')
-    sudo('service nginx restart')
+    sudo('chown root:root /etc/nginx/sites-enabled/kolibri.conf')
+    sudo('service nginx reload')
     puts(green('NGINX site kolibri.conf configured.'))
 
 
@@ -311,18 +317,22 @@ def configure_kolibri(kolibri_lang=KOLIBRI_LANG_DEFAULT):
         'KOLIBRI_PEX_FILE': KOLIBRI_PEX_FILE,
     }
 
+    startscript_path = os.path.join(KOLIBRI_HOME, 'startkolibri.sh')
     upload_template(os.path.join(CONFIG_DIR, 'startkolibri.template.sh'),
-                    os.path.join(KOLIBRI_HOME, 'startkolibri.sh'),
+                    startscript_path,
                     context=context,
                     mode='0755', use_jinja=True, use_sudo=True, backup=False)
+    sudo('chown {}:{} {}'.format(KOLIBRI_USER, KOLIBRI_USER, startscript_path))
 
     # supervisor config
     context = {
         'KOLIBRI_HOME': KOLIBRI_HOME,
+        'KOLIBRI_USER': KOLIBRI_USER,
     }
     upload_template(os.path.join(CONFIG_DIR,'supervisor_kolibri.template.conf'),
                     '/etc/supervisor/conf.d/kolibri.conf',
                     context=context, use_jinja=True, use_sudo=True, backup=False)
+    sudo('chown root:root /etc/supervisor/conf.d/kolibri.conf')
     sudo('service supervisor restart')
     puts(green('Kolibri start script and supervisor config done.'))
 
@@ -337,7 +347,6 @@ def setup_kolibri(kolibri_lang=KOLIBRI_LANG_DEFAULT):
     current_role = env.effective_roles[0]
     role = env.roledefs[current_role]
     facility_name = role.get('facility_name', current_role.replace('-', ' '))
-
     # facility setup script
     context = {
         'KOLIBRI_LANG': kolibri_lang,
@@ -347,9 +356,9 @@ def setup_kolibri(kolibri_lang=KOLIBRI_LANG_DEFAULT):
                     os.path.join(KOLIBRI_HOME, 'setupkolibri.sh'),
                     context=context,
                     mode='0755', use_jinja=True, use_sudo=True, backup=False)
-
     setup_script_path = os.path.join(KOLIBRI_HOME, 'setupkolibri.sh')
-    run(setup_script_path)
+    sudo('chown {}:{} {}'.format(KOLIBRI_USER, KOLIBRI_USER, setup_script_path))
+    sudo(setup_script_path, user=KOLIBRI_USER)
     puts(green('Kolibri facility setup done.'))
 
 
@@ -373,8 +382,8 @@ def import_channel(channel_id):
     base_cmd = 'python ' + os.path.join(KOLIBRI_HOME, KOLIBRI_PEX_FILE) + ' manage'
     with hide('stdout'):
         with shell_env(KOLIBRI_HOME=KOLIBRI_HOME):
-            run(base_cmd + ' importchannel -- network ' + channel_id)
-            run(base_cmd + ' importcontent -- network ' + channel_id)
+            sudo(base_cmd + ' importchannel network ' + channel_id, user=KOLIBRI_USER)
+            sudo(base_cmd + ' importcontent network ' + channel_id, user=KOLIBRI_USER)
     puts(green('Channel ' + channel_id + ' imported.'))
 
 
@@ -385,14 +394,12 @@ def generateuserdata():
     """
     base_cmd = 'python ' + os.path.join(KOLIBRI_HOME, KOLIBRI_PEX_FILE) + ' manage'
     with shell_env(KOLIBRI_HOME=KOLIBRI_HOME):
-        run(base_cmd + ' generateuserdata')
+        sudo(base_cmd + ' generateuserdata', user=KOLIBRI_USER)
     puts(green('User data generation finished.'))
 
 
 @task
 def restart_kolibri(post_restart_sleep=0):
-    sudo('service nginx restart')
-    sudo('service supervisor restart')
     sudo('supervisorctl restart kolibri')
     if post_restart_sleep > 0:
         puts(green('Taking a pause for ' + str(post_restart_sleep) + 'sec to let migrations run...'))
@@ -400,8 +407,7 @@ def restart_kolibri(post_restart_sleep=0):
 
 @task
 def stop_kolibri():
-    sudo('service nginx stop')
-    sudo('service supervisor stop')
+    sudo('supervisorctl stop kolibri')
 
 @task
 def delete_kolibri():
