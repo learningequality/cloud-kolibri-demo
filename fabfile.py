@@ -145,6 +145,12 @@ env.roledefs = {
         'facility_name': 'Tahrir Academy Demo Server',
         'hostname': 'tahrir-academy-demo.learningequality.org',
     },
+    'khanacademy': {
+        'hosts':['104.196.215.244'],
+        'channels_to_import': ['1ceff53605e55bef987d88e0908658c5'],
+        'facility_name': 'Khan Academy Demo',
+        'hostname': 'khanacademy.learningequality.org',
+    },
 }
 
 
@@ -246,8 +252,9 @@ def update_kolibri(kolibri_lang=KOLIBRI_LANG_DEFAULT):
 @task
 def install_base():
     """
-    Install base system pacakges and prerequisites.
+    Install base system pacakges, add swap, and create application user.
     """
+    # 1.
     puts('Installing base system packages (this might take a few minutes).')
     with hide('running', 'stdout', 'stderr'):
         sudo('apt-get update -qq')
@@ -257,8 +264,21 @@ def install_base():
         sudo('apt-get install -y python3 python-pip gettext python-sphinx')
         sudo('apt-get install -y nginx')
         sudo('apt-get install -y supervisor')
+
+    # 2.
+    puts('Adding 1G of swap file /var/swap.1')
+    sudo('sudo /bin/dd if=/dev/zero of=/var/swap.1 bs=1M count=1024')
+    sudo('sudo /sbin/mkswap /var/swap.1')
+    sudo('sudo chmod 600 /var/swap.1')
+    sudo('sudo /sbin/swapon /var/swap.1')
+    # sudo /etc/fstab append:
+    # /var/swap.1   swap    swap    defaults        0   0
+
+    # 3.
     puts('Creating UNIX user ' + KOLIBRI_USER)
-    sudo('useradd ' + KOLIBRI_USER)
+    sudo('useradd  --create-home ' + KOLIBRI_USER)
+
+    #
     puts(green('Base install steps finished.'))
 
 
@@ -334,6 +354,7 @@ def configure_kolibri(kolibri_lang=KOLIBRI_LANG_DEFAULT):
                     context=context, use_jinja=True, use_sudo=True, backup=False)
     sudo('chown root:root /etc/supervisor/conf.d/kolibri.conf')
     sudo('service supervisor restart')
+    time.sleep(2)
     puts(green('Kolibri start script and supervisor config done.'))
 
 
