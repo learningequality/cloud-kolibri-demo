@@ -23,7 +23,7 @@ CONFIG_DIR = './config'
 # latest 0.5 (with patch for channel import fix)
 # KOLIBRI_PEX_URL = 'https://www.googleapis.com/download/storage/v1/b/le-downloads/o/kolibri%2Fbuildkite%2Fbuild-2093%2F2352%2Fkolibri-v0.5.0-1-g2681f11.pex?generation=1504282960738136&alt=media'
 # latest 0.6
-KOLIBRI_PEX_URL = 'https://www.googleapis.com/download/storage/v1/b/le-downloads/o/kolibri%2Fbuildkite%2Fbuild-2515%2F3206%2Fkolibri-0.6.dev020171024164610-git.pex?generation=1508865247886067&alt=media'
+KOLIBRI_PEX_URL = 'https://github.com/learningequality/kolibri/releases/download/v0.6.0/kolibri-0.6.0.pex'
 KOLIBRI_LANG_DEFAULT = 'en' # or 'sw-tz'
 KOLIBRI_HOME = '/kolibrihome'
 KOLIBRI_PORT = 9090
