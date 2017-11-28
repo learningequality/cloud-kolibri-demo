@@ -151,6 +151,24 @@ env.roledefs = {
         'facility_name': 'Khan Academy Demo',
         'hostname': 'khanacademy.learningequality.org',
     },
+    'edsitement-demo': {
+        'hosts':['35.196.57.174'],
+        'channels_to_import': ['2748b6a3569a55f5bd6e35a70e2be7ee'],
+        'facility_name': 'EDSITEment demo',
+        'hostname': 'edsitement-demo.learningequality.org',
+    },
+    'openupresources-demo': {
+        'hosts':['104.196.183.152'],
+        'channels_to_import': ['bafb26304c4a5286ae207764463a5a63'],
+        'facility_name': 'OpenUp Resources (Illustrative Mathematics) demo',
+        'hostname': 'openupresources-demo.learningequality.org',
+    },
+    'ict-essentials-demo': {
+        'hosts':['35.196.123.247'],
+        'channels_to_import': ['8c1eeee6cdbc5599b9e9d928ed793891'],
+        'facility_name': 'Rwanda MoW ICT Essentials demo',
+        'hostname': 'ict-essentials-demo.learningequality.org',
+    },
 }
 
 
