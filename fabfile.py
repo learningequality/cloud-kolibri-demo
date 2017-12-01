@@ -169,6 +169,12 @@ env.roledefs = {
         'facility_name': 'Rwanda MoW ICT Essentials demo',
         'hostname': 'ict-essentials-demo.learningequality.org',
     },
+    'beta4': {
+        'hosts':['35.227.41.206'],
+        'channels_to_import': [],
+        'facility_name': 'Beta4 Test Server',
+        'hostname': 'beta4.learningequality.org',
+    },
 }
 
 
