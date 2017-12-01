@@ -175,6 +175,12 @@ env.roledefs = {
         'facility_name': 'Beta4 Test Server',
         'hostname': 'beta4.learningequality.org',
     },
+    'ubongo-etl': {
+        'hosts':['35.227.43.20'],
+        'channels_to_import': [],
+        'facility_name': 'ubongo etl',
+        'hostname': 'ubongo-etl.learningequality.org',    # Does not exist
+    },
 }
 
 
