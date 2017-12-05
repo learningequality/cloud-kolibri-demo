@@ -266,10 +266,13 @@ def update_kolibri(kolibri_lang=KOLIBRI_LANG_DEFAULT):
       - overwrite the startup script /kolibrihome/startkolibri.sh
       - overwrite the supervisor script /etc/supervisor/conf.d/kolibri.conf.
     """
+    install_base()
     stop_kolibri()
     download_kolibri()
+    # no nginx, because already confured
     configure_kolibri()
     restart_kolibri(post_restart_sleep=65)  # wait for DB migration to happen...
+    # no need to create facily, assume already created
     import_channels()
     restart_kolibri()
     puts(green('Kolibri server update complete.'))
@@ -296,19 +299,20 @@ def install_base():
         sudo('apt-get install -y supervisor')
 
     # 2.
-    puts('Adding 1G of swap file /var/swap.1')
-    sudo('sudo /bin/dd if=/dev/zero of=/var/swap.1 bs=1M count=1024')
-    sudo('sudo /sbin/mkswap /var/swap.1')
-    sudo('sudo chmod 600 /var/swap.1')
-    sudo('sudo /sbin/swapon /var/swap.1')
-    # sudo /etc/fstab append:
-    # /var/swap.1   swap    swap    defaults        0   0
+    if not exists('/var/swap.1'):
+        puts('Adding 1G of swap file /var/swap.1')
+        sudo('sudo /bin/dd if=/dev/zero of=/var/swap.1 bs=1M count=1024')
+        sudo('sudo /sbin/mkswap /var/swap.1')
+        sudo('sudo chmod 600 /var/swap.1')
+        sudo('sudo /sbin/swapon /var/swap.1')
+        # sudo /etc/fstab append:
+        # /var/swap.1   swap    swap    defaults        0   0
 
     # 3.
-    puts('Creating UNIX user ' + KOLIBRI_USER)
-    sudo('useradd  --create-home ' + KOLIBRI_USER)
+    if not exists('/home/kolibri'):
+        puts('Creating UNIX user ' + KOLIBRI_USER)
+        sudo('useradd  --create-home ' + KOLIBRI_USER)
 
-    #
     puts(green('Base install steps finished.'))
 
 
@@ -321,7 +325,7 @@ def download_kolibri():
         sudo('mkdir -p ' + KOLIBRI_HOME)
         sudo('chmod 777 ' + KOLIBRI_HOME)
     with cd(KOLIBRI_HOME):
-        run('wget --no-verbose "{}" -O {}'.format(KOLIBRI_PEX_URL, KOLIBRI_PEX_FILE))
+        sudo('wget --no-verbose "{}" -O {}'.format(KOLIBRI_PEX_URL, KOLIBRI_PEX_FILE))
     sudo('chown -R {}:{}  {}'.format(KOLIBRI_USER, KOLIBRI_USER, KOLIBRI_HOME))
     puts(green('Kolibri pex downloaded.'))
 
