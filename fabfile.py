@@ -18,12 +18,7 @@ CONFIG_DIR = './config'
 
 # KOLIBRI SETTTINGS
 ################################################################################
-# latest 0.4
-# KOLIBRI_PEX_URL = 'https://github.com/learningequality/kolibri/releases/download/v0.4.5/kolibri-v0.4.5.pex'
-# latest 0.5 (with patch for channel import fix)
-# KOLIBRI_PEX_URL = 'https://www.googleapis.com/download/storage/v1/b/le-downloads/o/kolibri%2Fbuildkite%2Fbuild-2093%2F2352%2Fkolibri-v0.5.0-1-g2681f11.pex?generation=1504282960738136&alt=media'
-# latest 0.6
-KOLIBRI_PEX_URL = 'https://github.com/learningequality/kolibri/releases/download/v0.6.1-beta1/kolibri-0.6.1.dev020171205065013-git.pex'
+KOLIBRI_PEX_URL = 'https://github.com/learningequality/kolibri/releases/download/v0.7.0/kolibri-0.7.0.pex'
 KOLIBRI_LANG_DEFAULT = 'en' # or 'sw-tz'
 KOLIBRI_HOME = '/kolibrihome'
 KOLIBRI_PORT = 9090
@@ -181,6 +176,12 @@ env.roledefs = {
         'facility_name': 'ubongo etl',
         'hostname': 'ubongo-etl.learningequality.org',    # Does not exist
     },
+    'pradigi-demo': {
+        'hosts':['35.196.179.152'],
+        'channels_to_import': ['620ef30860a65e7d8b2607ed03cc318f'],  # PraDigi
+        'facility_name': 'PraDigi Demo Server',
+        'hostname': 'pradigi-demo.learningequality.org',
+    },
 }
 
 
@@ -271,7 +272,7 @@ def update_kolibri(kolibri_lang=KOLIBRI_LANG_DEFAULT):
     download_kolibri()
     # no nginx, because already confured
     configure_kolibri()
-    restart_kolibri(post_restart_sleep=65)  # wait for DB migration to happen...
+    restart_kolibri(post_restart_sleep=70)  # wait for DB migration to happen...
     # no need to create facily, assume already created
     import_channels()
     restart_kolibri()
