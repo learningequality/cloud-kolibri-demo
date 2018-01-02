@@ -182,6 +182,12 @@ env.roledefs = {
         'facility_name': 'PraDigi Demo Server',
         'hostname': 'pradigi-demo.learningequality.org',
     },
+    'teachengineering-demo': {
+        'hosts':['35.185.118.57'],
+        'channels_to_import': ['05ffba594e68590db3c58ee5f345228e'],
+        'facility_name': 'teachengineering demo',
+        'hostname': 'teachengineering-demo.learningequality.org',
+    },
 }
 
 
