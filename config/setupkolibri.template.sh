@@ -3,12 +3,14 @@
 set -eo pipefail
 
 export KOLIBRI_LANG={{KOLIBRI_LANG}}
+export KOLIBRI_RUN_MODE="demoserver"
 
 # Settings for /api/deviceprovision/ POST
 export KOLIBRI_DEVICEPROVISION_FACILTY_NAME="{{KOLIBRI_FACILITY_NAME}}"
 export KOLIBRI_DEVICEPROVISION_PRESETS="formal"  # other options "nonformal" "informal"
 export KOLIBRI_DEVICEPROVISION_SUPERUSER_USERNAME="devowner"
 export KOLIBRI_DEVICEPROVISION_SUPERUSER_PASSWORD="admin123"
+
 
 generate_post_data()
 {

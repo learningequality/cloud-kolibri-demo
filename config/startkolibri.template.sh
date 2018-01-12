@@ -7,6 +7,7 @@ export KOLIBRI_LANG={{KOLIBRI_LANG}}
 export KOLIBRI_HOME={{KOLIBRI_HOME}}
 export KOLIBRI_PORT={{KOLIBRI_PORT}}
 export KOLIBRI_PEX_FILE={{KOLIBRI_PEX_FILE}}
+export KOLIBRI_RUN_MODE="demoserver"
 
 
 python $KOLIBRI_PEX_FILE language setdefault $KOLIBRI_LANG
