@@ -18,7 +18,7 @@ CONFIG_DIR = './config'
 
 # KOLIBRI SETTTINGS
 ################################################################################
-KOLIBRI_PEX_URL = 'https://github.com/learningequality/kolibri/releases/download/v0.7.1/kolibri-0.7.1.pex'
+KOLIBRI_PEX_URL = 'https://github.com/learningequality/kolibri/releases/download/v0.7.2-beta2/kolibri-0.7.2b2.pex'
 KOLIBRI_LANG_DEFAULT = 'en' # or 'sw-tz'
 KOLIBRI_HOME = '/kolibrihome'
 KOLIBRI_PORT = 9090
@@ -193,6 +193,12 @@ env.roledefs = {
         'channels_to_import': ['c150ea1d69495d37b5b0ac6f017e9bfb'],
         'facility_name': 'davidhu demo',
         'hostname': 'davidhu-demo.learningequality.org',  # Does not exist yet
+    },
+    'gdl-demo': {
+        'hosts':['35.185.3.47'],
+        'channels_to_import': [],
+        'facility_name': 'Global Digital Library demo',
+        'hostname': 'gdl-demo.learningequality.org',
     },
 }
 
