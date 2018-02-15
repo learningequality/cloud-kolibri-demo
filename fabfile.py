@@ -16,6 +16,13 @@ from fabric.utils import puts
 env.user = os.environ.get('USER')  # assume ur local username == remote username
 CONFIG_DIR = './config'
 
+# GCP SETTINGS
+################################################################################
+GCP_PROJECT = 'kolibri-demo-servers'
+GCP_ZONE = 'us-east1-d'
+GCP_REGION = 'us-east1'
+GCP_BOOT_DISK_SIZE = '30GB'
+
 # KOLIBRI SETTTINGS
 ################################################################################
 KOLIBRI_PEX_URL = 'https://github.com/learningequality/kolibri/releases/download/v0.7.2-beta2/kolibri-0.7.2b2.pex'
@@ -200,18 +207,18 @@ env.roledefs = {
         'facility_name': 'Global Digital Library demo',
         'hostname': 'gdl-demo.learningequality.org',
     },
+    'pbs-demo': {
+        'hosts':['35.229.41.226'],
+        'channels_to_import': ['bc016b653d145d479ff3fe31b9ebd05d'],
+        'facility_name': 'PBS demo',
+        'hostname': 'pbs-demo.learningequality.org',
+    },
 }
 
 
 
 # PROVIDIONING
 ################################################################################
-
-# GCP SETTINGS
-GCP_PROJECT = 'kolibri-demo-servers'
-GCP_ZONE = 'us-east1-d'
-GCP_REGION = 'us-east1'
-GCP_BOOT_DISK_SIZE = '30GB'
 
 @task
 def create(instance_name):
