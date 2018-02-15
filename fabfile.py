@@ -254,8 +254,12 @@ def delete(instance_name):
     Delete the GCP instance `instance_name` and it's associated IP address.
     """
     delete_cmd = 'gcloud compute instances delete ' + instance_name + ' --quiet'
+    delete_cmd += ' --project ' + GCP_PROJECT
+    delete_cmd += ' --zone ' + GCP_ZONE
     local(delete_cmd)
     delete_ip_cmd = 'gcloud compute addresses delete ' + instance_name + ' --quiet'
+    delete_ip_cmd += ' --project ' + GCP_PROJECT
+    delete_ip_cmd += ' --region ' + GCP_REGION
     local(delete_ip_cmd)
     puts(green('Deleted instance ' + instance_name + ' and its static IP.'))
 
