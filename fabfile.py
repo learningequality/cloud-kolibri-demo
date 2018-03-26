@@ -25,7 +25,9 @@ GCP_BOOT_DISK_SIZE = '30GB'
 
 # KOLIBRI SETTTINGS
 ################################################################################
-KOLIBRI_PEX_URL = 'https://github.com/learningequality/kolibri/releases/download/v0.7.2-beta2/kolibri-0.7.2b2.pex'
+# KOLIBRI_PEX_URL = 'https://github.com/learningequality/kolibri/releases/download/v0.7.2/kolibri-0.7.2.pex'
+KOLIBRI_PEX_URL = 'https://github.com/learningequality/kolibri/releases/download/v0.8.0/kolibri-0.8.0.pex'
+
 KOLIBRI_LANG_DEFAULT = 'en' # or 'sw-tz'
 KOLIBRI_HOME = '/kolibrihome'
 KOLIBRI_PORT = 9090
@@ -212,6 +214,18 @@ env.roledefs = {
         'channels_to_import': ['bc016b653d145d479ff3fe31b9ebd05d'],
         'facility_name': 'PBS demo',
         'hostname': 'pbs-demo.learningequality.org',
+    },
+    'readwritethink-demo': {
+        'hosts':['35.231.98.159'],
+        'channels_to_import': ['d6a3e8b17e8a5ac9b021f378a15afbb4'],
+        'facility_name': 'readwritethink demo',
+        'hostname': 'readwritethink-demo.learningequality.org',
+    },
+    'commonlit-demo': {
+        'hosts':['35.231.45.26'],
+        'channels_to_import': ['aa8d785452204e868ebc017fd65c3a58', '1556413bd74c45c59c46353e0be7dd90'],
+        'facility_name': 'CommonLit Mexico Demo',
+        'hostname': 'commonlit-demo.learningequality.org',
     },
 }
 
