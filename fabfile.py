@@ -227,6 +227,18 @@ env.roledefs = {
         'facility_name': 'CommonLit Mexico Demo',
         'hostname': 'commonlit-demo.learningequality.org',
     },
+    'tessindia-demo': {
+        'hosts':['35.196.85.89'],
+        'channels_to_import': ['eac7ff5d4647582d9bcbefea7323fcb1'],
+        'facility_name': 'tessindia demo',
+        'hostname': 'tessindia-demo.learningequality.org',
+    },
+    'artsedge-demo': {
+        'hosts':['35.196.82.154'],
+        'channels_to_import': ['ce1361bcf5955df596e8d988f7ba2c37'],
+        'facility_name': 'artsedge demo',
+        'hostname': 'artsedge-demo.learningequality.org',
+    },
 }
 
 
