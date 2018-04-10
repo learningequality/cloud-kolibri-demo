@@ -26,7 +26,8 @@ GCP_BOOT_DISK_SIZE = '30GB'
 # KOLIBRI SETTTINGS
 ################################################################################
 # KOLIBRI_PEX_URL = 'https://github.com/learningequality/kolibri/releases/download/v0.7.2/kolibri-0.7.2.pex'
-KOLIBRI_PEX_URL = 'https://github.com/learningequality/kolibri/releases/download/v0.8.0/kolibri-0.8.0.pex'
+# KOLIBRI_PEX_URL = 'https://github.com/learningequality/kolibri/releases/download/v0.8.0/kolibri-0.8.0.pex'
+KOLIBRI_PEX_URL = 'https://github.com/learningequality/kolibri/releases/download/v0.9.0/kolibri-0.9.0.pex'
 
 KOLIBRI_LANG_DEFAULT = 'en' # or 'sw-tz'
 KOLIBRI_HOME = '/kolibrihome'
@@ -238,6 +239,12 @@ env.roledefs = {
         'channels_to_import': ['ce1361bcf5955df596e8d988f7ba2c37'],
         'facility_name': 'artsedge demo',
         'hostname': 'artsedge-demo.learningequality.org',
+    },
+    'kabangla-demo': {
+        'hosts':['35.190.185.23'],
+        'channels_to_import': ['a03496a6de095e7ba9d24291a487c78d'],
+        'facility_name': 'kabangla demo',
+        'hostname': 'kabangla-demo.learningequality.org',
     },
 }
 
