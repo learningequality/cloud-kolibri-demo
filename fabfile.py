@@ -27,7 +27,8 @@ GCP_BOOT_DISK_SIZE = '30GB'
 ################################################################################
 # KOLIBRI_PEX_URL = 'https://github.com/learningequality/kolibri/releases/download/v0.7.2/kolibri-0.7.2.pex'
 # KOLIBRI_PEX_URL = 'https://github.com/learningequality/kolibri/releases/download/v0.8.0/kolibri-0.8.0.pex'
-KOLIBRI_PEX_URL = 'https://github.com/learningequality/kolibri/releases/download/v0.9.0/kolibri-0.9.0.pex'
+# KOLIBRI_PEX_URL = 'https://github.com/learningequality/kolibri/releases/download/v0.9.0/kolibri-0.9.0.pex'
+KOLIBRI_PEX_URL = 'https://github.com/learningequality/kolibri/releases/download/v0.10.0-alpha1/kolibri-0.10.0.dev1.pex'
 
 KOLIBRI_LANG_DEFAULT = 'en' # or 'sw-tz'
 KOLIBRI_HOME = '/kolibrihome'
@@ -188,7 +189,7 @@ env.roledefs = {
     },
     'pradigi-demo': {
         'hosts':['35.196.179.152'],
-        'channels_to_import': ['620ef30860a65e7d8b2607ed03cc318f'],  # PraDigi
+        'channels_to_import': ['f9da12749d995fa197f8b4c0192e7b2c'],  # PraDigi
         'facility_name': 'PraDigi Demo Server',
         'hostname': 'pradigi-demo.learningequality.org',
     },
@@ -206,7 +207,7 @@ env.roledefs = {
     },
     'gdl-demo': {
         'hosts':['35.185.3.47'],
-        'channels_to_import': [],
+        'channels_to_import': ['0e173fca6e9052f8a474a2fb84055faf'],
         'facility_name': 'Global Digital Library demo',
         'hostname': 'gdl-demo.learningequality.org',
     },
@@ -245,6 +246,22 @@ env.roledefs = {
         'channels_to_import': ['a03496a6de095e7ba9d24291a487c78d'],
         'facility_name': 'kabangla demo',
         'hostname': 'kabangla-demo.learningequality.org',
+    },
+    'lauren-demo': {
+        'hosts':['35.185.120.102'],
+        'channels_to_import': ['9f99140721665ab7802c01998e2d9c30',      # SHLS
+                               'd23fa3e3916c5fbc81ec8aa18111744c'],     # Healing Classrooms
+        'facility_name': 'lauren demo',
+        'hostname': 'lauren-demo.learningequality.org',
+    },
+    'may-demo': {
+        'hosts':['35.196.143.130'],
+        'channels_to_import': ['0d07636e2f20510383a7d813c8d4233f',  # Learn English
+                               'c7eda62c6489554a941058fa883e7c2c',  # Better World Ed
+                               'faf284a5469d54b8b06881491196888e',  # Laboratoria
+        ],
+        'facility_name': 'May demo',
+        'hostname': 'may-demo.learningequality.org',
     },
 }
 
