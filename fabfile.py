@@ -28,7 +28,7 @@ GCP_BOOT_DISK_SIZE = '30GB'
 # KOLIBRI_PEX_URL = 'https://github.com/learningequality/kolibri/releases/download/v0.7.2/kolibri-0.7.2.pex'
 # KOLIBRI_PEX_URL = 'https://github.com/learningequality/kolibri/releases/download/v0.8.0/kolibri-0.8.0.pex'
 # KOLIBRI_PEX_URL = 'https://github.com/learningequality/kolibri/releases/download/v0.9.0/kolibri-0.9.0.pex'
-KOLIBRI_PEX_URL = 'https://github.com/learningequality/kolibri/releases/download/v0.10.0-alpha1/kolibri-0.10.0.dev1.pex'
+KOLIBRI_PEX_URL = 'https://github.com/learningequality/kolibri/releases/download/v0.10.0-alpha4/kolibri-0.10.0.dev4.pex'
 
 KOLIBRI_LANG_DEFAULT = 'en' # or 'sw-tz'
 KOLIBRI_HOME = '/kolibrihome'
