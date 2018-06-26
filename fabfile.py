@@ -23,16 +23,13 @@ GCP_ZONE = 'us-east1-d'
 GCP_REGION = 'us-east1'
 GCP_BOOT_DISK_SIZE = '30GB'
 
+
 # KOLIBRI SETTTINGS
 ################################################################################
-# KOLIBRI_PEX_URL = 'https://github.com/learningequality/kolibri/releases/download/v0.7.2/kolibri-0.7.2.pex'
-# KOLIBRI_PEX_URL = 'https://github.com/learningequality/kolibri/releases/download/v0.8.0/kolibri-0.8.0.pex'
-# KOLIBRI_PEX_URL = 'https://github.com/learningequality/kolibri/releases/download/v0.9.0/kolibri-0.9.0.pex'
-KOLIBRI_PEX_URL = 'https://github.com/learningequality/kolibri/releases/download/v0.10.0-alpha4/kolibri-0.10.0.dev4.pex'
-
 KOLIBRI_LANG_DEFAULT = 'en' # or 'sw-tz'
 KOLIBRI_HOME = '/kolibrihome'
 KOLIBRI_PORT = 9090
+KOLIBRI_PEX_URL = 'https://github.com/learningequality/kolibri/releases/download/v0.10.0-beta5/kolibri-0.10.0b5.pex'
 KOLIBRI_PEX_FILE = os.path.basename(KOLIBRI_PEX_URL.split("?")[0])  # in case ?querystr...
 KOLIBRI_USER = 'kolibri'
 
@@ -75,6 +72,7 @@ env.roledefs = {
             'c367b7d7cf625b9aa525972cad27c602', # PT-BR
             '30c71c99c42c57d181e8aeafd2e15e5f', # ES
             '3e464ee12f6a50a781cddf59147b48b1', # EN
+            '09d96cfabec451309066517930bdab9f', # AR
         ],
         'hostname': 'sikana-demo.learningequality.org',
     },
@@ -169,23 +167,11 @@ env.roledefs = {
         'facility_name': 'OpenUp Resources (Illustrative Mathematics) demo',
         'hostname': 'openupresources-demo.learningequality.org',
     },
-    'ict-essentials-demo': {
-        'hosts':['35.196.123.247'],
-        'channels_to_import': ['8c1eeee6cdbc5599b9e9d928ed793891'],
-        'facility_name': 'Rwanda MoW ICT Essentials demo',
-        'hostname': 'ict-essentials-demo.learningequality.org',
-    },
     'beta4': {
         'hosts':['35.227.41.206'],
         'channels_to_import': [],
         'facility_name': 'Beta4 Test Server',
         'hostname': 'beta4.learningequality.org',
-    },
-    'ubongo-etl': {
-        'hosts':['35.227.43.20'],
-        'channels_to_import': [],
-        'facility_name': 'ubongo etl',
-        'hostname': 'ubongo-etl.learningequality.org',    # Does not exist
     },
     'pradigi-demo': {
         'hosts':['35.196.179.152'],
@@ -195,7 +181,8 @@ env.roledefs = {
     },
     'teachengineering-demo': {
         'hosts':['35.185.118.57'],
-        'channels_to_import': ['05ffba594e68590db3c58ee5f345228e'],
+        'channels_to_import': ['41e303331a005007a38dbd85f6341b36',   # TeachEngineering 
+                               '424bd5474e3d5e56980a2e6783eb0dc6'],  # ES
         'facility_name': 'teachengineering demo',
         'hostname': 'teachengineering-demo.learningequality.org',
     },
@@ -262,6 +249,27 @@ env.roledefs = {
         ],
         'facility_name': 'May demo',
         'hostname': 'may-demo.learningequality.org',
+    },
+    'engagenyar-demo': {
+        'hosts':['35.237.29.181'],
+        'channels_to_import': ['67f61db3988352249106eee4839e0519'],
+        'facility_name': 'EngageNY Arabic demo',
+        'hostname': 'engagenyar-demo.learningequality.org',
+    },
+    'kolibridemo-ar': {
+        'hosts':['104.196.171.225'],
+        'channels_to_import': [ 'c150ea1d69495d37b5b0ac6f017e9bfb', # 3asafeer
+                                '5310274534044fafbad6646a0716b299', # MIT Blossoms AR
+                                '310ec19477d15cf7b9fed98551ba1e1f', # Tahrir
+        ],
+        'facility_name': 'Kolibri Demo Arabic',
+        'hostname': 'kolibridemo-ar.learningequality.org',
+    },
+    'ka-ru-demo': {
+        'hosts':['35.227.63.118'],
+        'channels_to_import': [],
+        'facility_name': 'Khan Academy ru demo',
+        'hostname': 'ka-ru-demo.learningequality.org',
     },
 }
 

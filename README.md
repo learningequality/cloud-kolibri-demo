@@ -60,6 +60,9 @@ change `KOLIBRI_PEX_URL` in `fabfile.py` to the URL of the latest release and th
 
 This will download the new pex, overwrite the startup script, and restart Kolibri.
 
+**NOTE**: currenlty this command fails sporadically, so need to run it twice for it to work.
+
+
 You can also change the language of the Kolibri installation by passing the optional
 argument `kolibri_lang`. For example, to switch the `mitblossoms-demo` server to
 use French for the Kolibri user interface, run the command:
