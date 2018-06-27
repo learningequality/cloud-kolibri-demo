@@ -561,6 +561,24 @@ def info():
 
 
 @task
+def list_instances(tsv=None):
+    """
+    Show list of all currently running demo instances.
+    Optional tsv argument for easy copy-pasting into spreadsheets.
+    """
+    cmd = 'gcloud compute instances list'
+    cmd += ' --project=kolibri-demo-servers'
+    # cmd += ' --format=yaml'
+    if tsv is not None:
+        cmd += ' --format="csv[separator=\'\t\']('
+        cmd += '''name,
+                  zone.basename(),
+                  networkInterfaces[0].accessConfigs[0].natIP:label=EXTERNAL_IP,
+                  creationTimestamp.date(tz=LOCAL)
+                  )"'''
+    local(cmd)
+
+@task
 def checkdns():
     """
     Checks if DNS lookup matches hosts IP.
