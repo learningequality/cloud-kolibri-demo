@@ -6,7 +6,21 @@ Setup a kolibri demo server from any channel.
 
 TODO
 ----
-Figure out if KOLIBRI_LANGUAGE is necessary for cmd line or a Facility setting now
+Figure out if KOLIBRI_LANGUAGE is necessary for cmd line or a Facility setting.
+
+
+
+GCP authentication
+------------------
+Run this to do the complete GCP login song and dance via OAuth login etc:
+
+    gcloud init
+
+To test if you're logged in and authorized to access the GCP project run
+
+    gcloud compute instances list --project=kolibri-demo-servers
+
+You should see all VM instances in the GCP project `kolibri-demo-servers`.
 
 
 Install
@@ -17,12 +31,12 @@ Install
     pip install -r requirements.txt
 
 
+
 Create instance
 ---------------
 Suppose you want to setup a demo server called `mitblossoms-demo`. First you must
-create the demo server:
+create the demo server instance:
 
-    gcloud init
     fab create:mitblossoms-demo
 
 Note it's also possible to provision a virtual machine using web interface.
