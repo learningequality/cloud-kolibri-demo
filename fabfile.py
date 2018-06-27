@@ -120,17 +120,6 @@ env.roledefs = {
         'channels_to_import': ['fc47aee82e0153e2a30197d3fdee1128'],
         'hostname': 'openstax-demo.learningequality.org', # DNE
     },
-    'le-060-beta': {
-        'hosts':['35.185.84.118'],
-        'channels_to_import': [
-            'fb51dae6df7545af8455aa3a0c32048d',   # Portion Control
-            '2b1ca4c771594ff8b28e4a9f6534128b',   # Instant Schools (test)
-            '93a5bfcfa2a74962be843288aefcfc0e',   # Khan Academy Hisabati (Tanzania)
-            '11d9de56da744f98877cc9fe710bb78d',   # Instan Schools (Math)
-        ],
-        'facility_name': 'Test Server for 0.6 betas',
-        'hostname': 'le-060-beta.learningequality.org',
-    },
     'open-osmosis-demo': {
         'hosts':['35.196.195.91'],
         'channels_to_import': ['8b28761bac075deeb66adc6c80ef119c'],
@@ -166,12 +155,6 @@ env.roledefs = {
         'channels_to_import': ['bafb26304c4a5286ae207764463a5a63'],
         'facility_name': 'OpenUp Resources (Illustrative Mathematics) demo',
         'hostname': 'openupresources-demo.learningequality.org',
-    },
-    'beta4': {
-        'hosts':['35.227.41.206'],
-        'channels_to_import': [],
-        'facility_name': 'Beta4 Test Server',
-        'hostname': 'beta4.learningequality.org',
     },
     'pradigi-demo': {
         'hosts':['35.196.179.152'],
