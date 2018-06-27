@@ -11,6 +11,12 @@ from fabric.contrib.files import exists, sed, upload_template
 from fabric.utils import puts
 
 
+# PREREQUISITES
+# 1. SusOps engineer be part of the GCP project kolibri-demo-servers
+# 2. The username $USER must be one of the default accounts created on instances, see:
+#    https://console.cloud.google.com/compute/metadata?project=kolibri-demo-servers
+
+
 # FAB SETTTINGS
 ################################################################################
 env.user = os.environ.get('USER')  # assume ur local username == remote username
@@ -29,7 +35,7 @@ GCP_BOOT_DISK_SIZE = '30GB'
 KOLIBRI_LANG_DEFAULT = 'en' # or 'sw-tz'
 KOLIBRI_HOME = '/kolibrihome'
 KOLIBRI_PORT = 9090
-KOLIBRI_PEX_URL = 'https://github.com/learningequality/kolibri/releases/download/v0.10.0-beta5/kolibri-0.10.0b5.pex'
+KOLIBRI_PEX_URL = 'https://github.com/learningequality/kolibri/releases/download/v0.11.0-alpha2/kolibri-0.11.0a2.pex'
 KOLIBRI_PEX_FILE = os.path.basename(KOLIBRI_PEX_URL.split("?")[0])  # in case ?querystr...
 KOLIBRI_USER = 'kolibri'
 
@@ -339,6 +345,7 @@ def update_kolibri(kolibri_lang=KOLIBRI_LANG_DEFAULT):
       - (re)download the Kolibri pex from KOLIBRI_PEX_URL
       - overwrite the startup script /kolibrihome/startkolibri.sh
       - overwrite the supervisor script /etc/supervisor/conf.d/kolibri.conf.
+    NOTE: this command fails sporadically; try two times and it will work.
     """
     install_base()
     stop_kolibri()

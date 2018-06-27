@@ -1,7 +1,7 @@
 Kolibri demo in the cloud
 =========================
 
-Setup a kolibri demo server from any channel.
+Setup a kolibri demo server from any pex and any content channel.
 
 
 TODO
@@ -10,9 +10,21 @@ Figure out if KOLIBRI_LANGUAGE is necessary for cmd line or a Facility setting.
 
 
 
-GCP authentication
-------------------
-Run this to do the complete GCP login song and dance via OAuth login etc:
+GCP Authentication and Authorization
+------------------------------------
+1. The SushOps engineer who will be running these scripts must be part of the GCP project
+[`kolibri-demo-servers`](https://console.cloud.google.com/compute/instances?project=kolibri-demo-servers).
+As a first step, try logging in via the web interface and check what can you see.
+
+2. The SushOps engineer must be one of the default sudo accounts specified on the
+"compute metadata" tab in the GCP console. The metadata field for ssh-keys must
+contain the SushOps engineer's username and their public ssh key. To confirm, see
+[here](https://console.cloud.google.com/compute/metadata?project=kolibri-demo-servers).
+Note: The scripts assume the SushOps engineer's username on GCP metadata is the
+same as on their laptop (Laptop username taken from `echo $USER`).
+
+3. On the command line, you'll have to install `gcloud` command line tools, then
+run this to do the complete GCP login song and dance via OAuth login etc:
 
     gcloud init
 
@@ -21,6 +33,7 @@ To test if you're logged in and authorized to access the GCP project run
     gcloud compute instances list --project=kolibri-demo-servers
 
 You should see all VM instances in the GCP project `kolibri-demo-servers`.
+
 
 
 Install
