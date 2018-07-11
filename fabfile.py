@@ -35,7 +35,7 @@ GCP_BOOT_DISK_SIZE = '30GB'
 KOLIBRI_LANG_DEFAULT = 'en' # or 'sw-tz'
 KOLIBRI_HOME = '/kolibrihome'
 KOLIBRI_PORT = 9090
-KOLIBRI_PEX_URL = 'https://github.com/learningequality/kolibri/releases/download/v0.11.0-alpha2/kolibri-0.11.0a2.pex'
+KOLIBRI_PEX_URL = 'https://github.com/learningequality/kolibri/releases/download/v0.10.0/kolibri-0.10.0.pex'
 KOLIBRI_PEX_FILE = os.path.basename(KOLIBRI_PEX_URL.split("?")[0])  # in case ?querystr...
 KOLIBRI_USER = 'kolibri'
 
@@ -54,16 +54,6 @@ env.roledefs = {
         'hosts':['104.196.196.6'],
         'channels_to_import': ['7db80873586841e4a1c249b2bb8ba62d'],
         'hostname': 'unicefdemo.learningequality.org',
-    },
-    'serlo-demo': {
-        'hosts':['104.196.182.229'],
-        'channels_to_import': ['c089800ef73e5ef0ac1d0d9e1d193147'],
-        'hostname': 'serlo-demo.learningequality.org',
-    },
-    'te-demo': {
-        'hosts':['35.190.168.15'],
-        'channels_to_import': ['66cef05505fa550b970e69c3623e82ba'],
-        'hostname': 'te-demo.learningequality.org',
     },
     'sikana-demo': {
         'hosts':['104.196.110.174'],
@@ -138,18 +128,6 @@ env.roledefs = {
         'facility_name': 'firki demo',
         'hostname': 'firki-demo.learningequality.org',  # D.N.E.
     },
-    'tahrir-academy-demo': {
-        'hosts':['104.196.194.35'],
-        'channels_to_import': ['310ec19477d15cf7b9fed98551ba1e1f'],
-        'facility_name': 'Tahrir Academy Demo Server',
-        'hostname': 'tahrir-academy-demo.learningequality.org',
-    },
-    'khanacademy': {
-        'hosts':['104.196.215.244'],
-        'channels_to_import': ['1ceff53605e55bef987d88e0908658c5'],
-        'facility_name': 'Khan Academy Demo',
-        'hostname': 'khanacademy.learningequality.org',
-    },
     'edsitement-demo': {
         'hosts':['35.196.57.174'],
         'channels_to_import': ['2748b6a3569a55f5bd6e35a70e2be7ee'],
@@ -181,12 +159,6 @@ env.roledefs = {
         'facility_name': 'davidhu demo',
         'hostname': 'davidhu-demo.learningequality.org',  # Does not exist yet
     },
-    'gdl-demo': {
-        'hosts':['35.185.3.47'],
-        'channels_to_import': ['0e173fca6e9052f8a474a2fb84055faf'],
-        'facility_name': 'Global Digital Library demo',
-        'hostname': 'gdl-demo.learningequality.org',
-    },
     'pbs-demo': {
         'hosts':['35.229.41.226'],
         'channels_to_import': ['bc016b653d145d479ff3fe31b9ebd05d'],
@@ -198,12 +170,6 @@ env.roledefs = {
         'channels_to_import': ['d6a3e8b17e8a5ac9b021f378a15afbb4'],
         'facility_name': 'readwritethink demo',
         'hostname': 'readwritethink-demo.learningequality.org',
-    },
-    'commonlit-demo': {
-        'hosts':['35.231.45.26'],
-        'channels_to_import': ['aa8d785452204e868ebc017fd65c3a58', '1556413bd74c45c59c46353e0be7dd90'],
-        'facility_name': 'CommonLit Mexico Demo',
-        'hostname': 'commonlit-demo.learningequality.org',
     },
     'tessindia-demo': {
         'hosts':['35.196.85.89'],
@@ -235,6 +201,7 @@ env.roledefs = {
         'channels_to_import': ['0d07636e2f20510383a7d813c8d4233f',  # Learn English
                                'c7eda62c6489554a941058fa883e7c2c',  # Better World Ed
                                'faf284a5469d54b8b06881491196888e',  # Laboratoria
+                               '43c08c5c7a7d5365b8a0fe5b0b7b28ad',  # IllustrativeMathematicsCORS
         ],
         'facility_name': 'May demo',
         'hostname': 'may-demo.learningequality.org',
