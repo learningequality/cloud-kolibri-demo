@@ -227,8 +227,13 @@ env.roledefs = {
         'facility_name': 'Khan Academy ru demo',
         'hostname': 'ka-ru-demo.learningequality.org',
     },
+    'ka-bg-demo': {
+        'hosts':['35.198.171.164'],
+        'channels_to_import': ['09ee940e106953a2b6716e1020a0ce3f'],
+        'facility_name': 'Khan Agademy Bulgarian demo server',
+        'hostname': 'ka-bg-demo.learningequality.org',
+    },
 }
-
 
 
 # PROVIDIONING
