@@ -35,7 +35,7 @@ GCP_BOOT_DISK_SIZE = '30GB'
 KOLIBRI_LANG_DEFAULT = 'en' # or 'sw-tz'
 KOLIBRI_HOME = '/kolibrihome'
 KOLIBRI_PORT = 9090
-KOLIBRI_PEX_URL = 'https://github.com/learningequality/kolibri/releases/download/v0.10.0/kolibri-0.10.0.pex'
+KOLIBRI_PEX_URL = 'https://github.com/learningequality/kolibri/releases/download/v0.11.0-beta2/kolibri-0.11.0b2.pex'
 KOLIBRI_PEX_FILE = os.path.basename(KOLIBRI_PEX_URL.split("?")[0])  # in case ?querystr...
 KOLIBRI_USER = 'kolibri'
 
@@ -233,6 +233,13 @@ env.roledefs = {
         'facility_name': 'Khan Agademy Bulgarian demo server',
         'hostname': 'ka-bg-demo.learningequality.org',
     },
+    'pradigi-demo-backup': {
+        'hosts':['35.196.115.213'],
+        'channels_to_import': ['f9da12749d995fa197f8b4c0192e7b2c',
+                               'e6af491e90f642a9bf12d549bab662aa'],
+        'facility_name': 'pradigi demo backup',
+        'hostname': 'pradigi-demo-backup.learningequality.org',
+    },
 }
 
 
@@ -329,7 +336,6 @@ def update_kolibri(kolibri_lang=KOLIBRI_LANG_DEFAULT):
     import_channels()
     restart_kolibri()
     puts(green('Kolibri server update complete.'))
-
 
 
 # SYSADMIN TASKS
