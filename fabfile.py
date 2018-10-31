@@ -240,6 +240,19 @@ env.roledefs = {
         'facility_name': 'pradigi demo backup',
         'hostname': 'pradigi-demo-backup.learningequality.org',
     },
+    'davemckee-demo': {
+        'hosts':['35.231.153.103'],
+        'channels_to_import': [
+            '935cf973324c53b8aeeae1fea35e0ded',  # Noktta
+            'ce1361bcf5955df596e8d988f7ba2c37',  # ArtsEdge
+            'ddb7b46f75575d16aa2223ba822e1c06',  # NASASpacePlace
+            '0d4fd88c4882573caa02110243b94c30',  # MIT-chemistry thing
+            '0d07636e2f20510383a7d813c8d4233f',  # British Council LearnEnglish
+            'bafb26304c4a5286ae207764463a5a63',  # Illustrative Math
+        ],
+        'facility_name': 'Dave McKee Demo',
+        'hostname': 'davemckee-demo.learningequality.org',
+    },
 }
 
 
