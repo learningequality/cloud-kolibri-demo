@@ -35,7 +35,7 @@ GCP_BOOT_DISK_SIZE = '30GB'
 KOLIBRI_LANG_DEFAULT = 'en' # or 'sw-tz'
 KOLIBRI_HOME = '/kolibrihome'
 KOLIBRI_PORT = 9090
-KOLIBRI_PEX_URL = 'https://github.com/learningequality/kolibri/releases/download/v0.11.0-beta2/kolibri-0.11.0b2.pex'
+KOLIBRI_PEX_URL = 'https://github.com/learningequality/kolibri/releases/download/v0.11.0/kolibri-0.11.0.pex'
 KOLIBRI_PEX_FILE = os.path.basename(KOLIBRI_PEX_URL.split("?")[0])  # in case ?querystr...
 KOLIBRI_USER = 'kolibri'
 
@@ -597,3 +597,17 @@ def checkdns():
                 print('WRONG DNS for', role_name, 'Hostname:', hostname, 'Expected:', host_ip, 'Got:', results_text)
         except dns.resolver.NoAnswer:
             print('MISSING DNS for', role_name, 'Hostname:', hostname, 'Expected:', host_ip)
+
+@task
+def checkdiskspace():
+    """
+    Check available disk space on all demo servers.
+    """
+    puts(blue('Checking available disk space on all demo servers.'))
+    demo_servers = list(env.roledefs.items())
+    for role_name, role in demo_servers:
+        assert len(role['hosts'])==1, 'Multiple hosts found for role'
+        print('role_name', role_name)
+        env.host_string = role['hosts'][0]
+        run('df -h | grep /dev/sda1')
+
