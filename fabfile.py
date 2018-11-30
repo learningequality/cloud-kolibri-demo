@@ -253,6 +253,23 @@ env.roledefs = {
         'facility_name': 'Dave McKee Demo',
         'hostname': 'davemckee-demo.learningequality.org',
     },
+    'alejandro-demo': {
+        'hosts':['35.227.71.104'],
+        'channels_to_import': [
+            'da53f90b1be25752a04682bbc353659f',  # Ciencia NASA
+            '2748b6a3569a55f5bd6e35a70e2be7ee',  # EDSITEment
+            'e66cd89375845ebf864ea00005be902d',  # ELD Teacher Professional Course
+            'faf284a5469d54b8b06881491196888e',  # Laboratoria
+            '1d13b59b62b85470b61483fa63c530a2',  # Libretext OER Library
+            'd6a3e8b17e8a5ac9b021f378a15afbb4',  # ReadWriteThink
+            '41e303331a005007a38dbd85f6341b36',  # TeachEngineering
+            '424bd5474e3d5e56980a2e6783eb0dc6',  # TeachEngineering (es)
+            'eac7ff5d4647582d9bcbefea7323fcb1',  # TESSIndia
+            # '668a1d198f2e5269939df31dd8c36efb',  # TED Talks Arabic Subtitles
+        ],
+        'facility_name': 'alejandro demo',
+        'hostname': 'alejandro-demo.learningequality.org',
+    },
 }
 
 
