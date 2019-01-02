@@ -265,10 +265,22 @@ env.roledefs = {
             '41e303331a005007a38dbd85f6341b36',  # TeachEngineering
             '424bd5474e3d5e56980a2e6783eb0dc6',  # TeachEngineering (es)
             'eac7ff5d4647582d9bcbefea7323fcb1',  # TESSIndia
+            'c4ad70f67dff57738591086e466f9afc',  # Proyecto Descartes (Ling Yi)
             # '668a1d198f2e5269939df31dd8c36efb',  # TED Talks Arabic Subtitles
         ],
         'facility_name': 'alejandro demo',
         'hostname': 'alejandro-demo.learningequality.org',
+    },
+    'ralphie-demo': {
+        'hosts':['35.196.60.25'],
+        'channels_to_import': [                # KA = KHAN ACADEMY TRANSLATIONS
+            '5357e52581c3567da4f56d56badfeac7',     # Gujarati
+            '2b608c6fd4c35c34b7387e3dd7b53265',     # Burmese
+            'e0180108006950a990e58f6fe92aa4eb',     # Korean
+            '8036442b7dde5b34b88c0e52b385c1bf',     # Fulfulde Mbororore
+        ],
+        'facility_name': 'ralphie demo',
+        'hostname': 'ralphie-demo.learningequality.org',
     },
 }
 
