@@ -35,7 +35,7 @@ GCP_BOOT_DISK_SIZE = '30GB'
 KOLIBRI_LANG_DEFAULT = 'en' # or 'sw-tz'
 KOLIBRI_HOME = '/kolibrihome'
 KOLIBRI_PORT = 9090
-KOLIBRI_PEX_URL = 'https://github.com/learningequality/kolibri/releases/download/v0.11.0/kolibri-0.11.0.pex'
+KOLIBRI_PEX_URL = 'https://github.com/learningequality/kolibri/releases/download/v0.11.1/kolibri-0.11.1.pex'
 KOLIBRI_PEX_FILE = os.path.basename(KOLIBRI_PEX_URL.split("?")[0])  # in case ?querystr...
 KOLIBRI_USER = 'kolibri'
 
@@ -282,7 +282,41 @@ env.roledefs = {
         'facility_name': 'ralphie demo',
         'hostname': 'ralphie-demo.learningequality.org',
     },
+    'demo-ar': {
+        'hosts':['35.246.148.139'],
+        'channels_to_import': [
+            '9c22d36a81ba5eb0842f9192a18d9623',    # Abdulla Eid Network (العربيّة)
+            'dd530f50b10e5864bad2f4c4d4050584',    # Sehha wa Sa’adah: Dubai Health Authority (العربيّة)
+            'c150ea1d69495d37b5b0ac6f017e9bfb',    # 3asafeer (العربيّة)
+            '935cf973324c53b8aeeae1fea35e0ded',    # Noktta (العربيّة)
+            '77195c11baa05d3f886d02578cef80d0',    # Orange NGO (العربيّة)
+            'e66cd89375845ebf864ea00005be902d',    # ELD Teacher Professional Development Courses (العربيّة)
+            'd76da4d36cfd59279b575dfc6017aa13',    # Kamkalima (العربيّة)
+            '3a9c1cbc13ca5efe8500e20307f90a57',    # PhET Interactive Simulation (العربيّة)
+            '27bb0abc24d44dd9896be50d47b2357e',    # Living Values Education (العربيّة)
+            '4f9d1fd5107c50c9a12376b242bcbd21',    # Sciences for Lower Secondary Learners (العربيّة)
+            '0d4fd88c4882573caa02110243b94c30',    # Shamsuna Al-Arabiyah: MIT Basic Chemistry (Arabic Subtitles)
+            '362ecc59a30e53539f7b8d7fd6f1fcc5',    # ELD King Khaled University Learning (العربيّة)
+            '5310274534044fafbad6646a0716b299',    # MIT Blossoms (العربيّة)
+            '28590de7af1a4e41824e7574625e1731',    # Math with Basil Al-Zubaidi (العربيّة)
+            '310ec19477d15cf7b9fed98551ba1e1f',    # Tahrir Academy
+            'b431ba9f16a3588b89700f3eb8281af0',    # Hsoub Academy (العربيّة)
+            '09d96cfabec451309066517930bdab9f',    # Sikana (العربية)
+            '668a1d198f2e5269939df31dd8c36efb',    # TED Talks Arabic Subtitles
+            '0418cc231e9c5513af0fff9f227f7172',    # Free English with Hello Channel
+            '61b75af2bb2c4c0ea850d85dcf88d0fd',    # Espresso English
+            # 'fdd1dea75e375454b5d8cdcfb52400c2',    # Multaqaddarain K-12 (العربيّة)
+            # 'be0ed086641952deb1515b4bb541f7c2',    # Khan Academy (Arabic)
+            # 'e8e791651d785bb9b4502598e7f46a42',    # Multaqaddarain Adults (العربيّة)
+            # 'f9d3e0e46ea25789bbed672ff6a399ed',    # African Storybook
+            # '67f61db3988352249106eee4839e0519',    # Engage NY (العربيّة) [draft]
+        ],
+        'facility_name': 'New Arabic Demo',
+        'hostname': 'demo-ar.learningequality.org',
+    },
 }
+
+
 
 
 # PROVIDIONING
