@@ -35,7 +35,8 @@ GCP_BOOT_DISK_SIZE = '30GB'
 KOLIBRI_LANG_DEFAULT = 'en' # or 'sw-tz'
 KOLIBRI_HOME = '/kolibrihome'
 KOLIBRI_PORT = 9090
-KOLIBRI_PEX_URL = 'https://github.com/learningequality/kolibri/releases/download/v0.11.1/kolibri-0.11.1.pex'
+KOLIBRI_PEX_URL = 'https://github.com/learningequality/kolibri/releases/download/v0.12.0/kolibri-0.12.0.pex'
+# KOLIBRI_PEX_URL = 'https://www.googleapis.com/download/storage/v1/b/le-downloads/o/kolibri-buildkite-build-5009-9863-kolibri-0.12.0b4.dev0_git.3.g7ea3f82f.pex?generation=1549922468409533&alt=media'
 KOLIBRI_PEX_FILE = os.path.basename(KOLIBRI_PEX_URL.split("?")[0])  # in case ?querystr...
 KOLIBRI_USER = 'kolibri'
 
@@ -142,7 +143,7 @@ env.roledefs = {
     },
     'pradigi-demo': {
         'hosts':['35.196.179.152'],
-        'channels_to_import': ['f9da12749d995fa197f8b4c0192e7b2c'],  # PraDigi
+        'channels_to_import': [], # 'f9da12749d995fa197f8b4c0192e7b2c'],  # PraDigi
         'facility_name': 'PraDigi Demo Server',
         'hostname': 'pradigi-demo.learningequality.org',
     },
@@ -198,11 +199,12 @@ env.roledefs = {
     },
     'may-demo': {
         'hosts':['35.196.143.130'],
-        'channels_to_import': ['0d07636e2f20510383a7d813c8d4233f',  # Learn English
-                               'c7eda62c6489554a941058fa883e7c2c',  # Better World Ed
-                               'faf284a5469d54b8b06881491196888e',  # Laboratoria
-                               '43c08c5c7a7d5365b8a0fe5b0b7b28ad',  # IllustrativeMathematicsCORS
-        ],
+        'channels_to_import': [],
+        #'0d07636e2f20510383a7d813c8d4233f',  # Learn English
+        #                       'c7eda62c6489554a941058fa883e7c2c',  # Better World Ed
+        #                       'faf284a5469d54b8b06881491196888e',  # Laboratoria
+        #                       '43c08c5c7a7d5365b8a0fe5b0b7b28ad',  # IllustrativeMathematicsCORS
+        #],
         'facility_name': 'May demo',
         'hostname': 'may-demo.learningequality.org',
     },
@@ -313,6 +315,39 @@ env.roledefs = {
         ],
         'facility_name': 'New Arabic Demo',
         'hostname': 'demo-ar.learningequality.org',
+    },
+    'design-sprint': {
+        'hosts':['35.198.69.255'],
+        'channels_to_import': [
+            # source
+            '1ceff53605e55bef987d88e0908658c5', # KA -en
+            'c7eda62c6489554a941058fa883e7c2c',  # - BetterWorld
+            '1d8f6d84618153c18c695d85074952a7',  # 	- CK-12
+            '197934f144305350b5820c7c4dd8e194',  # 	- PHET
+            'f9d3e0e46ea25789bbed672ff6a399ed',  # 	- African Storybook
+            '74f36493bb475b62935fa8705ed59fed',  # 	- Thoughtful Learning
+            'd6e3b856125f5e6aa5fb40c8b112d5e9',  #  EngageNY
+            'a9b25ac9814742c883ce1b0579448337',  #  TESSA
+            # curated
+            '32b5fc156a7d46ddb8cea9663a1871be',
+            '591b7e1bc89645ef846c1685a7dd7b50',
+            '335b8e0ed8a3426580e4c58f62810d25',
+            'fdab6fb66ba24d05acd011e85bdb36ba',
+            '54aa253a3266416da0c847e16e64aa7b',
+            'e006726b1f35487eb7b2aa7cb11caf4c',
+            '8111ac9ab99646a1be9984f13b29167d',
+            '0543f0f0516b4eeebf281854e80d3e14',
+            'ae8f138108c1410aa4c6d8bf734ebf57',
+            'be30cd98263244768c8684320441eecb',
+            '0a9cd3c76a36402e87d6bf80a997901f',
+            '6f63fe92ad1044fdb3b3c17d54d0978e',
+            '9e5305326ed742d0892479dea825a514',
+            '292583c17e6d4199b81f0423bec58766',
+            '34fd6722dd734687bc5291fc717d2d7f',
+            'a68a5bf4aa8a475197658c7a0da528c7',
+        ],
+        'facility_name': 'design sprint',
+        'hostname': 'design-sprint.learningequality.org',
     },
 }
 
