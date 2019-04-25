@@ -349,6 +349,12 @@ env.roledefs = {
         'facility_name': 'design sprint',
         'hostname': 'design-sprint.learningequality.org',
     },
+    'jacob-demo': {
+        'hosts':['35.229.70.110'],
+        'channels_to_import': ['<channel_id>'],
+        'facility_name': 'jacob demo',
+        'hostname': 'jacob-demo.learningequality.org',
+    },
 }
 
 
