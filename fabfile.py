@@ -214,7 +214,7 @@ env.roledefs = {
         'facility_name': 'EngageNY Arabic demo',
         'hostname': 'engagenyar-demo.learningequality.org',
     },
-    'kolibridemo-ar': {
+    'OLDkolibridemo-ar': { # SHUTDOWN on Apr 23
         'hosts':['104.196.171.225'],
         'channels_to_import': [ 'c150ea1d69495d37b5b0ac6f017e9bfb', # 3asafeer
                                 '5310274534044fafbad6646a0716b299', # MIT Blossoms AR
@@ -284,7 +284,7 @@ env.roledefs = {
         'facility_name': 'ralphie demo',
         'hostname': 'ralphie-demo.learningequality.org',
     },
-    'demo-ar': {
+    'kolibridemo-ar': {
         'hosts':['35.246.148.139'],
         'channels_to_import': [
             '9c22d36a81ba5eb0842f9192a18d9623',    # Abdulla Eid Network (العربيّة)
@@ -293,7 +293,7 @@ env.roledefs = {
             '935cf973324c53b8aeeae1fea35e0ded',    # Noktta (العربيّة)
             '77195c11baa05d3f886d02578cef80d0',    # Orange NGO (العربيّة)
             'e66cd89375845ebf864ea00005be902d',    # ELD Teacher Professional Development Courses (العربيّة)
-            'd76da4d36cfd59279b575dfc6017aa13',    # Kamkalima (العربيّة)
+            # 'd76da4d36cfd59279b575dfc6017aa13',    # Kamkalima (العربيّة)
             '3a9c1cbc13ca5efe8500e20307f90a57',    # PhET Interactive Simulation (العربيّة)
             '27bb0abc24d44dd9896be50d47b2357e',    # Living Values Education (العربيّة)
             '4f9d1fd5107c50c9a12376b242bcbd21',    # Sciences for Lower Secondary Learners (العربيّة)
@@ -314,7 +314,7 @@ env.roledefs = {
             # '67f61db3988352249106eee4839e0519',    # Engage NY (العربيّة) [draft]
         ],
         'facility_name': 'New Arabic Demo',
-        'hostname': 'demo-ar.learningequality.org',
+        'hostname': 'kolibridemo-ar.learningequality.org',
     },
     'design-sprint': {
         'hosts':['35.198.69.255'],
