@@ -237,8 +237,9 @@ env.roledefs = {
     },
     'pradigi-demo-backup': {
         'hosts':['35.196.115.213'],
-        'channels_to_import': ['f9da12749d995fa197f8b4c0192e7b2c',
-                               'e6af491e90f642a9bf12d549bab662aa'],
+        'channels_to_import': [],
+        #['f9da12749d995fa197f8b4c0192e7b2c',
+        #                       'e6af491e90f642a9bf12d549bab662aa'],
         'facility_name': 'pradigi demo backup',
         'hostname': 'pradigi-demo-backup.learningequality.org',
     },
@@ -249,7 +250,7 @@ env.roledefs = {
             'ce1361bcf5955df596e8d988f7ba2c37',  # ArtsEdge
             'ddb7b46f75575d16aa2223ba822e1c06',  # NASASpacePlace
             '0d4fd88c4882573caa02110243b94c30',  # MIT-chemistry thing
-            '0d07636e2f20510383a7d813c8d4233f',  # British Council LearnEnglish
+            # '0d07636e2f20510383a7d813c8d4233f',  # British Council LearnEnglish
             'bafb26304c4a5286ae207764463a5a63',  # Illustrative Math
         ],
         'facility_name': 'Dave McKee Demo',
@@ -447,7 +448,7 @@ def update_kolibri(kolibri_lang=KOLIBRI_LANG_DEFAULT):
     stop_kolibri()
     download_kolibri()
     # no nginx, because already confured
-    configure_kolibri()
+    configure_kolibri(kolibri_lang=kolibri_lang)
     restart_kolibri(post_restart_sleep=70)  # wait for DB migration to happen...
     # no need to create facily, assume already created
     import_channels()
@@ -466,9 +467,10 @@ def install_base():
     # 1.
     puts('Installing base system packages (this might take a few minutes).')
     with hide('running', 'stdout', 'stderr'):
+        sudo('curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | apt-key add -')
         sudo('apt-get update -qq')
         # sudo('apt-get upgrade -y')  # no need + slows down process for nothing
-        sudo('apt-get install -y software-properties-common')
+        sudo('apt-get install -y --force-yes software-properties-common')
         sudo('apt-get install -y curl vim git sqlite3')
         sudo('apt-get install -y python3 python-pip gettext python-sphinx')
         sudo('apt-get install -y nginx')
