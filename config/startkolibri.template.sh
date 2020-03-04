@@ -12,5 +12,7 @@ export KOLIBRI_RUN_MODE="demoserver"
 # export KOLIBRI_CENTRAL_CONTENT_BASE_URL="https://develop.studio.learningequality.org"
 
 
-python $KOLIBRI_PEX_FILE language setdefault $KOLIBRI_LANG
-exec python $KOLIBRI_PEX_FILE start --foreground --port=$KOLIBRI_PORT   # TODO: test exec vs no-exec
+# This command was needed for older version of Kolibri to set the default language
+# python $KOLIBRI_PEX_FILE language setdefault $KOLIBRI_LANG
+
+exec python $KOLIBRI_PEX_FILE start --foreground --port=$KOLIBRI_PORT

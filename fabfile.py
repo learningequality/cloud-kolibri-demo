@@ -35,8 +35,7 @@ GCP_BOOT_DISK_SIZE = '30GB'
 KOLIBRI_LANG_DEFAULT = 'en' # or 'sw-tz'
 KOLIBRI_HOME = '/kolibrihome'
 KOLIBRI_PORT = 9090
-KOLIBRI_PEX_URL = 'https://github.com/learningequality/kolibri/releases/download/v0.12.0/kolibri-0.12.0.pex'
-# KOLIBRI_PEX_URL = 'https://www.googleapis.com/download/storage/v1/b/le-downloads/o/kolibri-buildkite-build-5009-9863-kolibri-0.12.0b4.dev0_git.3.g7ea3f82f.pex?generation=1549922468409533&alt=media'
+KOLIBRI_PEX_URL = 'https://github.com/learningequality/kolibri/releases/download/v0.13.1/kolibri-0.13.1.pex'
 KOLIBRI_PEX_FILE = os.path.basename(KOLIBRI_PEX_URL.split("?")[0])  # in case ?querystr...
 KOLIBRI_USER = 'kolibri'
 
@@ -156,7 +155,7 @@ env.roledefs = {
     },
     'davidhu-demo': {
         'hosts':['35.231.113.78'],
-        'channels_to_import': ['c150ea1d69495d37b5b0ac6f017e9bfb'],
+        'channels_to_import': [],
         'facility_name': 'davidhu demo',
         'hostname': 'davidhu-demo.learningequality.org',  # Does not exist yet
     },
@@ -444,7 +443,7 @@ def update_kolibri(kolibri_lang=KOLIBRI_LANG_DEFAULT):
       - overwrite the supervisor script /etc/supervisor/conf.d/kolibri.conf.
     NOTE: this command fails sporadically; try two times and it will work.
     """
-    install_base()
+    # install_base()  # Mar 4: disabled because Debian 8 repos no longer avail.
     stop_kolibri()
     download_kolibri()
     # no nginx, because already confured
