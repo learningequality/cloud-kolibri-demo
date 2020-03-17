@@ -3,7 +3,7 @@ import json
 import os
 import time
 
-from fabric.api import env, task, local, sudo, run
+from fabric.api import env, task, local, sudo, run, settings
 from fabric.api import get, put, require
 from fabric.colors import red, green, blue, yellow
 from fabric.context_managers import cd, prefix, show, hide, shell_env
@@ -716,3 +716,22 @@ def checkdiskspace():
         env.host_string = role['hosts'][0]
         run('df -h | grep /dev/sda1')
 
+
+
+@task
+def install_squid_proxy():
+    """
+    Install squid3 package and starts it so demoserver can be used as HTTP proxy.
+    Note this rquires opening port 3128 on from the GCP console for this server,
+    which can be done by applying the "Network tag" `allow-http-proxy-3128`.
+    """
+    with settings(warn_only=True):
+         sudo('apt-get -y install squid3')
+    sudo('sed -i "s/http_access deny all/http_access allow all/g" /etc/squid3/squid.conf')
+    sudo('service squid3 restart')
+    puts('\n')
+    puts(green('Proxy service started on ' + str(env.host)))
+    puts('Next steps:')
+    puts('  1. Visit https://console.cloud.google.com/compute/instances?project=kolibri-demo-servers&organizationId=845500209641&instancessize=50')
+    puts('     and add the Network Tag  "allow-http-proxy-3128" to the server ' + env.effective_roles[0])
+    puts('  2. After that you can append {}:{} to the PROXY_LIST used for cheffing.'.format(env.host, '3128'))
