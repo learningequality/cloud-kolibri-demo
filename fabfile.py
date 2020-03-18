@@ -735,3 +735,16 @@ def install_squid_proxy():
     puts('  1. Visit https://console.cloud.google.com/compute/instances?project=kolibri-demo-servers&organizationId=845500209641&instancessize=50')
     puts('     and add the Network Tag  "allow-http-proxy-3128" to the server ' + env.effective_roles[0])
     puts('  2. After that you can append {}:{} to the PROXY_LIST used for cheffing.'.format(env.host, '3128'))
+
+
+@task
+def uninstall_squid_proxy():
+    """
+    Stop and uninstall squid3 proxy on the demoserver.
+    """
+    sudo('service squid3 stop')
+    with settings(warn_only=True):
+         sudo('apt-get -y purge squid3')
+    puts(green('Proxy service removed from ' + str(env.host)))
+    puts(blue('**Please remove {}:{} from PROXY_LIST used for cheffing.**'.format(env.host, '3128')))
+
