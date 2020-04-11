@@ -2,6 +2,7 @@ import dns.resolver
 import json
 import os
 import time
+import socket
 
 from fabric.api import env, task, local, sudo, run, settings
 from fabric.api import get, put, require
@@ -727,7 +728,7 @@ def install_squid_proxy():
     """
     with settings(warn_only=True):
          sudo('apt-get -y install squid3')
-    sudo('sed -i "s/http_access deny all/http_access allow all/g" /etc/squid3/squid.conf')
+    put('config/etc_squid3_squid.conf', '/etc/squid3/squid.conf', use_sudo=True)
     sudo('service squid3 restart')
     puts('\n')
     puts(green('Proxy service started on ' + str(env.host)))
@@ -747,4 +748,33 @@ def uninstall_squid_proxy():
          sudo('apt-get -y purge squid3')
     puts(green('Proxy service removed from ' + str(env.host)))
     puts(blue('**Please remove {}:{} from PROXY_LIST used for cheffing.**'.format(env.host, '3128')))
+
+
+@task
+def checkproxies():
+    """
+    Check which demoservers have port 3128 open and is running a proxy service.
+    """
+    puts(green('Checking proxy service available on all demo servers.'))
+    demo_servers = list(env.roledefs.items())
+    proxy_hosts = []
+    for role_name, role in demo_servers:
+        assert len(role['hosts'])==1, 'Multiple hosts found for role'
+        host = role['hosts'][0]
+        print('Checking role_name=', role_name, 'host=', host)
+        # check if we proxy port is open on host
+        proxy_port_open = False
+        port = 3128  # squid3 default proxy port
+        sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        sock.settimeout(2)
+        result = sock.connect_ex((host, port))
+        proxy_port_open = True if result == 0 else False
+        sock.close()
+        if proxy_port_open:
+            puts('    - proxy port open on {} demoserver'.format(role_name))
+            proxy_hosts.append(host)
+    PROXY_LIST_value = ';'.join(host+':3128' for host in proxy_hosts)
+    puts(blue('Use the following command to set the PROXY_LIST env var:\n'))
+    puts(blue('  export PROXY_LIST="' + PROXY_LIST_value + '"'))
+
 
