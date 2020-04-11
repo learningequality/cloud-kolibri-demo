@@ -766,7 +766,7 @@ def checkproxies():
         proxy_port_open = False
         port = 3128  # squid3 default proxy port
         sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        sock.settimeout(2)
+        sock.settimeout(3)
         result = sock.connect_ex((host, port))
         proxy_port_open = True if result == 0 else False
         sock.close()
