@@ -36,7 +36,7 @@ GCP_BOOT_DISK_SIZE = '30GB'
 KOLIBRI_LANG_DEFAULT = 'en' # or 'sw-tz'
 KOLIBRI_HOME = '/kolibrihome'
 KOLIBRI_PORT = 9090
-KOLIBRI_PEX_URL = 'https://github.com/learningequality/kolibri/releases/download/v0.13.1/kolibri-0.13.1.pex'
+KOLIBRI_PEX_URL = 'https://github.com/learningequality/kolibri/releases/download/v0.13.2/kolibri-0.13.2.pex'
 KOLIBRI_PEX_FILE = os.path.basename(KOLIBRI_PEX_URL.split("?")[0])  # in case ?querystr...
 KOLIBRI_USER = 'kolibri'
 
