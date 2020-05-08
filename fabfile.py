@@ -718,6 +718,8 @@ def checkdiskspace():
         run('df -h | grep /dev/sda1')
 
 
+# PROXY SERVICE
+################################################################################
 
 @task
 def install_squid_proxy():
@@ -736,6 +738,25 @@ def install_squid_proxy():
     puts('  1. Visit https://console.cloud.google.com/compute/instances?project=kolibri-demo-servers&organizationId=845500209641&instancessize=50')
     puts('     and add the Network Tag  "allow-http-proxy-3128" to the server ' + env.effective_roles[0])
     puts('  2. After that you can append {}:{} to the PROXY_LIST used for cheffing.'.format(env.host, '3128'))
+
+@task
+def update_squid_proxy():
+    """
+    Update the /etc/squid3/squid.conf on all proxy hosts.
+    Use this command to add new IP addresses to the lecheffers ACL group.
+    """
+    proxy_hosts = checkproxies()
+    puts(green('Updating the proxy service config file /etc/squid3/squid.conf for'))
+    puts(green('proxy_hosts = ' + str(proxy_hosts)))
+    for host in proxy_hosts:
+        env.host_string = host
+        with hide('running', 'stdout', 'stderr'):
+            hostname = run('hostname')
+        puts(green('Updting proxy config on ' + hostname))
+        sudo('service squid3 stop')
+        put('config/etc_squid3_squid.conf', '/etc/squid3/squid.conf', use_sudo=True)
+        sudo('service squid3 start')
+    puts(green('All proxy servers updated successfully.'))
 
 
 @task
@@ -776,5 +797,4 @@ def checkproxies():
     PROXY_LIST_value = ';'.join(host+':3128' for host in proxy_hosts)
     puts(blue('Use the following command to set the PROXY_LIST env var:\n'))
     puts(blue('  export PROXY_LIST="' + PROXY_LIST_value + '"'))
-
-
+    return proxy_hosts
