@@ -2,6 +2,7 @@ import dns.resolver
 import json
 import os
 import time
+import requests
 import socket
 
 from fabric.api import env, task, local, sudo, run, settings
@@ -162,7 +163,7 @@ env.roledefs = {
     },
     'pbs-demo': {
         'hosts':['35.229.41.226'],
-        'channels_to_import': ['bc016b653d145d479ff3fe31b9ebd05d'],
+        'channels_to_import': [], # 'bc016b653d145d479ff3fe31b9ebd05d'],
         'facility_name': 'PBS demo',
         'hostname': 'pbs-demo.learningequality.org',
     },
@@ -213,15 +214,6 @@ env.roledefs = {
         'channels_to_import': ['67f61db3988352249106eee4839e0519'],
         'facility_name': 'EngageNY Arabic demo',
         'hostname': 'engagenyar-demo.learningequality.org',
-    },
-    'OLDkolibridemo-ar': { # SHUTDOWN on Apr 23
-        'hosts':['104.196.171.225'],
-        'channels_to_import': [ 'c150ea1d69495d37b5b0ac6f017e9bfb', # 3asafeer
-                                '5310274534044fafbad6646a0716b299', # MIT Blossoms AR
-                                '310ec19477d15cf7b9fed98551ba1e1f', # Tahrir
-        ],
-        'facility_name': 'Kolibri Demo Arabic',
-        'hostname': 'kolibridemo-ar.learningequality.org',
     },
     'ka-ru-demo': {
         'hosts':['35.227.63.118'],
@@ -274,14 +266,14 @@ env.roledefs = {
         'facility_name': 'alejandro demo',
         'hostname': 'alejandro-demo.learningequality.org',
     },
-    'ralphie-demo': {
+    'ralphie-demo': {       # Used by Lauren for demoing content
         'hosts':['35.196.60.25'],
-        'channels_to_import': [                # KA = KHAN ACADEMY TRANSLATIONS
-            '5357e52581c3567da4f56d56badfeac7',     # Gujarati
-            '2b608c6fd4c35c34b7387e3dd7b53265',     # Burmese
-            'e0180108006950a990e58f6fe92aa4eb',     # Korean
-            '8036442b7dde5b34b88c0e52b385c1bf',     # Fulfulde Mbororore
-        ],
+        'channels_to_import': [], #                 # previously KA = KHAN ACADEMY TRANSLATIONS
+            #'5357e52581c3567da4f56d56badfeac7',     # Gujarati
+            #'2b608c6fd4c35c34b7387e3dd7b53265',     # Burmese
+            #'e0180108006950a990e58f6fe92aa4eb',     # Korean
+            #'8036442b7dde5b34b88c0e52b385c1bf',     # Fulfulde Mbororore
+        #],
         'facility_name': 'ralphie demo',
         'hostname': 'ralphie-demo.learningequality.org',
     },
@@ -316,39 +308,6 @@ env.roledefs = {
         ],
         'facility_name': 'New Arabic Demo',
         'hostname': 'kolibridemo-ar.learningequality.org',
-    },
-    'design-sprint': {
-        'hosts':['35.198.69.255'],
-        'channels_to_import': [
-            # source
-            '1ceff53605e55bef987d88e0908658c5', # KA -en
-            'c7eda62c6489554a941058fa883e7c2c',  # - BetterWorld
-            '1d8f6d84618153c18c695d85074952a7',  # 	- CK-12
-            '197934f144305350b5820c7c4dd8e194',  # 	- PHET
-            'f9d3e0e46ea25789bbed672ff6a399ed',  # 	- African Storybook
-            '74f36493bb475b62935fa8705ed59fed',  # 	- Thoughtful Learning
-            'd6e3b856125f5e6aa5fb40c8b112d5e9',  #  EngageNY
-            'a9b25ac9814742c883ce1b0579448337',  #  TESSA
-            # curated
-            '32b5fc156a7d46ddb8cea9663a1871be',
-            '591b7e1bc89645ef846c1685a7dd7b50',
-            '335b8e0ed8a3426580e4c58f62810d25',
-            'fdab6fb66ba24d05acd011e85bdb36ba',
-            '54aa253a3266416da0c847e16e64aa7b',
-            'e006726b1f35487eb7b2aa7cb11caf4c',
-            '8111ac9ab99646a1be9984f13b29167d',
-            '0543f0f0516b4eeebf281854e80d3e14',
-            'ae8f138108c1410aa4c6d8bf734ebf57',
-            'be30cd98263244768c8684320441eecb',
-            '0a9cd3c76a36402e87d6bf80a997901f',
-            '6f63fe92ad1044fdb3b3c17d54d0978e',
-            '9e5305326ed742d0892479dea825a514',
-            '292583c17e6d4199b81f0423bec58766',
-            '34fd6722dd734687bc5291fc717d2d7f',
-            'a68a5bf4aa8a475197658c7a0da528c7',
-        ],
-        'facility_name': 'design sprint',
-        'hostname': 'design-sprint.learningequality.org',
     },
     'jacob-demo': {
         'hosts':['35.229.70.110'],
