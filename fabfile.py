@@ -163,12 +163,6 @@ env.roledefs = {
         'facility_name': 'davidhu demo',
         'hostname': 'davidhu-demo.learningequality.org',  # Does not exist yet
     },
-    'pbs-demo': {
-        'hosts':['35.229.41.226'],
-        'channels_to_import': [], # 'bc016b653d145d479ff3fe31b9ebd05d'],
-        'facility_name': 'PBS demo',
-        'hostname': 'pbs-demo.learningequality.org',
-    },
     'readwritethink-demo': {
         'hosts':['35.231.98.159'],
         'channels_to_import': ['d6a3e8b17e8a5ac9b021f378a15afbb4'],
@@ -228,6 +222,15 @@ env.roledefs = {
         'channels_to_import': ['09ee940e106953a2b6716e1020a0ce3f'],
         'facility_name': 'Khan Agademy Bulgarian demo server',
         'hostname': 'ka-bg-demo.learningequality.org',
+    },
+    #
+    # QA DEMO SERVERS
+    #
+    'pbs-demo': {
+        'hosts':['35.229.41.226'],
+        'channels_to_import': [], # 'bc016b653d145d479ff3fe31b9ebd05d'],
+        'facility_name': 'PBS demo',
+        'hostname': 'pbs-demo.learningequality.org',
     },
     'pradigi-demo-backup': {
         'hosts':['35.196.115.213'],
