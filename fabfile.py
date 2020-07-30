@@ -59,20 +59,6 @@ env.roledefs = {
         'channels_to_import': ['7db80873586841e4a1c249b2bb8ba62d'],
         'hostname': 'unicefdemo.learningequality.org',
     },
-    'african-storybook-demo': {
-        'hosts':['35.185.108.58'],
-        'channels_to_import': ['f9d3e0e46ea25789bbed672ff6a399ed'],
-        'hostname': 'african-storybook-demo.learningequality.org', # Does not exist
-    },
-    'india-demo': {
-        'hosts':['35.185.88.71'],
-        'channels_to_import': ['053653a2a7fa436a8b3991115db18d25', # Touchable Earth
-                               # '620ef30860a65e7d8b2607ed03cc318f', # Pratham Open School (not published yet)
-                               '131e543dbecf5776bb13cfcfddf05605', # Pratham Books Storyweaver
-                               # '620ef30860a65e7d8b2607ed03cc318f', # Khan Academy (hi)
-        ],
-        'hostname': 'no.hostname.because.temporary.org',
-    },
     'tessa-demo': {
         'hosts':['35.185.77.25'],
         'channels_to_import': ['45605d184d985e74960015190a6f4e4f'],
@@ -92,11 +78,6 @@ env.roledefs = {
         'hosts':['104.196.8.90'],
         'channels_to_import': ['ff5988e9bc1b542c96b4568e20144457'],
         'hostname': 'engageny-demo.learningequality.org',
-    },
-    'aflatoun-demo': {
-        'hosts':['35.196.3.200'],
-        'channels_to_import': ['8a2d480dbc9b53408c688e8188326b16', '8166e765a0095bfaa49e98d034653dc5'],
-        'hostname': 'aflatoun-demo.learningequality.org', # DNE yet
     },
     'openstax-demo': {
         'hosts':['35.196.171.6'],
