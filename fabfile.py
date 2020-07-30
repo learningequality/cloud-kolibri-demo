@@ -59,23 +59,6 @@ env.roledefs = {
         'channels_to_import': ['7db80873586841e4a1c249b2bb8ba62d'],
         'hostname': 'unicefdemo.learningequality.org',
     },
-    'sikana-demo': {
-        'hosts':['104.196.110.174'],
-        'channels_to_import': [
-            '3e9ffc29aa0b59c3bda8d8c7ed179685', # ZH
-            '6583e111dac85239bb533f26fae6860d', # ZH-TW
-            '757fe48770be588797d731b683fcc243', # RU
-            '8ef625db6e86506c9a3bac891e413fff', # FR
-            'cfa63fd45abf5b7390b1a41f3b4971bb', # TR
-            'fe95a8142b7952e0a0856944a2295951', # PL
-            '2871a3680d665bd1a8923660c8c0e1c7', # PT
-            'c367b7d7cf625b9aa525972cad27c602', # PT-BR
-            '30c71c99c42c57d181e8aeafd2e15e5f', # ES
-            '3e464ee12f6a50a781cddf59147b48b1', # EN
-            '09d96cfabec451309066517930bdab9f', # AR
-        ],
-        'hostname': 'sikana-demo.learningequality.org',
-    },
     'african-storybook-demo': {
         'hosts':['35.185.108.58'],
         'channels_to_import': ['f9d3e0e46ea25789bbed672ff6a399ed'],
@@ -186,13 +169,6 @@ env.roledefs = {
         'channels_to_import': ['a03496a6de095e7ba9d24291a487c78d'],
         'facility_name': 'kabangla demo',
         'hostname': 'kabangla-demo.learningequality.org',
-    },
-    'lauren-demo': {
-        'hosts':['35.185.120.102'],
-        'channels_to_import': ['9f99140721665ab7802c01998e2d9c30',      # SHLS
-                               'd23fa3e3916c5fbc81ec8aa18111744c'],     # Healing Classrooms
-        'facility_name': 'lauren demo',
-        'hostname': 'lauren-demo.learningequality.org',
     },
     'may-demo': {
         'hosts':['35.196.143.130'],
