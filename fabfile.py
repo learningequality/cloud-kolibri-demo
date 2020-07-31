@@ -54,34 +54,16 @@ env.roledefs = {
         'channels_to_import': ['7db80873586841e4a1c249b2bb8ba62d'],
         'hostname': 'unicefdemo.learningequality.org',
     },
-    'tessa-demo': {
-        'hosts':['35.185.77.25'],
-        'channels_to_import': ['45605d184d985e74960015190a6f4e4f'],
-        'hostname': 'tessa-demo.learningequality.org', # DNE
-    },
     'unete-demo': {
         'hosts':['35.196.220.94'],
         'channels_to_import': ['4d2dea0cdd424c6ab5f76e8244507d6e'],
         'hostname': 'unete-demo.learningequality.org',
-    },
-    'openupresources-demo': {
-        'hosts':['104.196.183.152'],
-        'channels_to_import': ['bafb26304c4a5286ae207764463a5a63'],
-        'facility_name': 'OpenUp Resources (Illustrative Mathematics) demo',
-        'hostname': 'openupresources-demo.learningequality.org',
     },
     'pradigi-demo': {
         'hosts':['35.196.179.152'],
         'channels_to_import': [], # 'f9da12749d995fa197f8b4c0192e7b2c'],  # PraDigi
         'facility_name': 'PraDigi Demo Server',
         'hostname': 'pradigi-demo.learningequality.org',
-    },
-    'teachengineering-demo': {
-        'hosts':['35.185.118.57'],
-        'channels_to_import': ['41e303331a005007a38dbd85f6341b36',   # TeachEngineering 
-                               '424bd5474e3d5e56980a2e6783eb0dc6'],  # ES
-        'facility_name': 'teachengineering demo',
-        'hostname': 'teachengineering-demo.learningequality.org',
     },
     'davidhu-demo': {
         'hosts':['35.231.113.78'],
@@ -100,12 +82,6 @@ env.roledefs = {
         'channels_to_import': ['eac7ff5d4647582d9bcbefea7323fcb1'],
         'facility_name': 'tessindia demo',
         'hostname': 'tessindia-demo.learningequality.org',
-    },
-    'artsedge-demo': {
-        'hosts':['35.196.82.154'],
-        'channels_to_import': ['ce1361bcf5955df596e8d988f7ba2c37'],
-        'facility_name': 'artsedge demo',
-        'hostname': 'artsedge-demo.learningequality.org',
     },
     'kabangla-demo': {
         'hosts':['35.190.185.23'],
@@ -232,6 +208,12 @@ env.roledefs = {
         'channels_to_import': ['<channel_id>'],
         'facility_name': 'jacob demo',
         'hostname': 'jacob-demo.learningequality.org',
+    },
+    'openupresources-demo': {  # Profuturo channels
+        'hosts':['104.196.183.152'],
+        'channels_to_import': [],
+        'facility_name': 'OLD OpenUp Resources (Illustrative Mathematics) demo',
+        'hostname': 'openupresources-demo.learningequality.org',
     },
 }
 
