@@ -74,11 +74,6 @@ env.roledefs = {
         'channels_to_import': ['4d2dea0cdd424c6ab5f76e8244507d6e'],
         'hostname': 'unete-demo.learningequality.org',
     },
-    'engageny-demo': {
-        'hosts':['104.196.8.90'],
-        'channels_to_import': ['ff5988e9bc1b542c96b4568e20144457'],
-        'hostname': 'engageny-demo.learningequality.org',
-    },
     'openstax-demo': {
         'hosts':['35.196.171.6'],
         'channels_to_import': ['fc47aee82e0153e2a30197d3fdee1128'],
@@ -95,12 +90,6 @@ env.roledefs = {
         'channels_to_import': ['9fd964d4c40a5ea1b96c1bc1b3830e72'],
         'facility_name': 'firki demo',
         'hostname': 'firki-demo.learningequality.org',  # D.N.E.
-    },
-    'edsitement-demo': {
-        'hosts':['35.196.57.174'],
-        'channels_to_import': ['2748b6a3569a55f5bd6e35a70e2be7ee'],
-        'facility_name': 'EDSITEment demo',
-        'hostname': 'edsitement-demo.learningequality.org',
     },
     'openupresources-demo': {
         'hosts':['104.196.183.152'],
