@@ -151,12 +151,6 @@ env.roledefs = {
         'facility_name': 'May demo',
         'hostname': 'may-demo.learningequality.org',
     },
-    'engagenyar-demo': {
-        'hosts':['35.237.29.181'],
-        'channels_to_import': ['67f61db3988352249106eee4839e0519'],
-        'facility_name': 'EngageNY Arabic demo',
-        'hostname': 'engagenyar-demo.learningequality.org',
-    },
     'ka-ru-demo': {
         'hosts':['35.227.63.118'],
         'channels_to_import': [],
