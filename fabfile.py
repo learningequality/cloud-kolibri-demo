@@ -49,11 +49,6 @@ KOLIBRI_USER = 'kolibri'
 ################################################################################
 
 env.roledefs = {
-    'mitblossoms-demo': {
-        'hosts':['104.196.162.204'],
-        'channels_to_import': ['913efe9f14c65cb1b23402f21f056e99'],
-        'hostname': 'mitblossoms-demo.learningequality.org',
-    },
     'unicef-demo': {
         'hosts':['104.196.196.6'],
         'channels_to_import': ['7db80873586841e4a1c249b2bb8ba62d'],
@@ -64,32 +59,10 @@ env.roledefs = {
         'channels_to_import': ['45605d184d985e74960015190a6f4e4f'],
         'hostname': 'tessa-demo.learningequality.org', # DNE
     },
-    'grammar-demo': {
-        'hosts':['35.196.177.88'],
-        'channels_to_import': ['e1d48c95c88341e5ba3008e4d970a615'],
-        'hostname': 'grammar-demo.learningequality.org', # DOES NOT EXIST
-    },
     'unete-demo': {
         'hosts':['35.196.220.94'],
         'channels_to_import': ['4d2dea0cdd424c6ab5f76e8244507d6e'],
         'hostname': 'unete-demo.learningequality.org',
-    },
-    'openstax-demo': {
-        'hosts':['35.196.171.6'],
-        'channels_to_import': ['fc47aee82e0153e2a30197d3fdee1128'],
-        'hostname': 'openstax-demo.learningequality.org', # DNE
-    },
-    'open-osmosis-demo': {
-        'hosts':['35.196.195.91'],
-        'channels_to_import': ['8b28761bac075deeb66adc6c80ef119c'],
-        'facility_name': 'open osmosis demo',
-        'hostname': 'open-osmosis-demo.learningequality.org',
-    },
-    'firki-demo': {
-        'hosts':['35.196.111.235'],
-        'channels_to_import': ['9fd964d4c40a5ea1b96c1bc1b3830e72'],
-        'facility_name': 'firki demo',
-        'hostname': 'firki-demo.learningequality.org',  # D.N.E.
     },
     'openupresources-demo': {
         'hosts':['104.196.183.152'],
