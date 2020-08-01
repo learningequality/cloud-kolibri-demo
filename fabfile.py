@@ -49,78 +49,15 @@ KOLIBRI_USER = 'kolibri'
 ################################################################################
 
 env.roledefs = {
-    'unicef-demo': {
-        'hosts':['104.196.196.6'],
-        'channels_to_import': ['7db80873586841e4a1c249b2bb8ba62d'],
-        'hostname': 'unicefdemo.learningequality.org',
-    },
-    'unete-demo': {
-        'hosts':['35.196.220.94'],
-        'channels_to_import': ['4d2dea0cdd424c6ab5f76e8244507d6e'],
-        'hostname': 'unete-demo.learningequality.org',
-    },
     'pradigi-demo': {
         'hosts':['35.196.179.152'],
         'channels_to_import': [], # 'f9da12749d995fa197f8b4c0192e7b2c'],  # PraDigi
         'facility_name': 'PraDigi Demo Server',
         'hostname': 'pradigi-demo.learningequality.org',
     },
-    'davidhu-demo': {
-        'hosts':['35.231.113.78'],
-        'channels_to_import': [],
-        'facility_name': 'davidhu demo',
-        'hostname': 'davidhu-demo.learningequality.org',  # Does not exist yet
-    },
-    'readwritethink-demo': {
-        'hosts':['35.231.98.159'],
-        'channels_to_import': ['d6a3e8b17e8a5ac9b021f378a15afbb4'],
-        'facility_name': 'readwritethink demo',
-        'hostname': 'readwritethink-demo.learningequality.org',
-    },
-    'tessindia-demo': {
-        'hosts':['35.196.85.89'],
-        'channels_to_import': ['eac7ff5d4647582d9bcbefea7323fcb1'],
-        'facility_name': 'tessindia demo',
-        'hostname': 'tessindia-demo.learningequality.org',
-    },
-    'kabangla-demo': {
-        'hosts':['35.190.185.23'],
-        'channels_to_import': ['a03496a6de095e7ba9d24291a487c78d'],
-        'facility_name': 'kabangla demo',
-        'hostname': 'kabangla-demo.learningequality.org',
-    },
-    'may-demo': {
-        'hosts':['35.196.143.130'],
-        'channels_to_import': [],
-        #'0d07636e2f20510383a7d813c8d4233f',  # Learn English
-        #                       'c7eda62c6489554a941058fa883e7c2c',  # Better World Ed
-        #                       'faf284a5469d54b8b06881491196888e',  # Laboratoria
-        #                       '43c08c5c7a7d5365b8a0fe5b0b7b28ad',  # IllustrativeMathematicsCORS
-        #],
-        'facility_name': 'May demo',
-        'hostname': 'may-demo.learningequality.org',
-    },
-    'ka-ru-demo': {
-        'hosts':['35.227.63.118'],
-        'channels_to_import': [],
-        'facility_name': 'Khan Academy ru demo',
-        'hostname': 'ka-ru-demo.learningequality.org',
-    },
-    'ka-bg-demo': {
-        'hosts':['35.198.171.164'],
-        'channels_to_import': ['09ee940e106953a2b6716e1020a0ce3f'],
-        'facility_name': 'Khan Agademy Bulgarian demo server',
-        'hostname': 'ka-bg-demo.learningequality.org',
-    },
     #
     # QA DEMO SERVERS
     #
-    'pbs-demo': {
-        'hosts':['35.229.41.226'],
-        'channels_to_import': [], # 'bc016b653d145d479ff3fe31b9ebd05d'],
-        'facility_name': 'PBS demo',
-        'hostname': 'pbs-demo.learningequality.org',
-    },
     'pradigi-demo-backup': {
         'hosts':['35.196.115.213'],
         'channels_to_import': [],
@@ -160,17 +97,6 @@ env.roledefs = {
         'facility_name': 'alejandro demo',
         'hostname': 'alejandro-demo.learningequality.org',
     },
-    'ralphie-demo': {       # Used by Lauren for demoing content
-        'hosts':['35.196.60.25'],
-        'channels_to_import': [], #                 # previously KA = KHAN ACADEMY TRANSLATIONS
-            #'5357e52581c3567da4f56d56badfeac7',     # Gujarati
-            #'2b608c6fd4c35c34b7387e3dd7b53265',     # Burmese
-            #'e0180108006950a990e58f6fe92aa4eb',     # Korean
-            #'8036442b7dde5b34b88c0e52b385c1bf',     # Fulfulde Mbororore
-        #],
-        'facility_name': 'ralphie demo',
-        'hostname': 'ralphie-demo.learningequality.org',
-    },
     'kolibridemo-ar': {
         'hosts':['35.246.148.139'],
         'channels_to_import': [
@@ -202,12 +128,6 @@ env.roledefs = {
         ],
         'facility_name': 'New Arabic Demo',
         'hostname': 'kolibridemo-ar.learningequality.org',
-    },
-    'jacob-demo': {
-        'hosts':['35.229.70.110'],
-        'channels_to_import': ['<channel_id>'],
-        'facility_name': 'jacob demo',
-        'hostname': 'jacob-demo.learningequality.org',
     },
     'openupresources-demo': {  # Profuturo channels
         'hosts':['104.196.183.152'],
