@@ -1,5 +1,7 @@
-Kolibri demo in the cloud
-=========================
+Aug 3rd: the code in this repo has been moved to https://github.com/learningequality/content-automation-scripts, but fabfile in this repo is still required to update the old demoservers.
+
+[LEGACY] Kolibri demo in the cloud
+==================================
 
 Setup a kolibri demo server from any pex and any content channel.
 
